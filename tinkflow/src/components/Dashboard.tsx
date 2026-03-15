@@ -23,6 +23,7 @@ export function Dashboard() {
     const [ollamaStatus, setOllamaStatus] = useState<'checking' | 'connected' | 'offline'>('checking');
     const [installedModels, setInstalledModels] = useState<string[]>([]);
     const [pullingModel, setPullingModel] = useState<string | null>(null);
+    const [cancelling, setCancelling] = useState(false);
     const [ollamaProgress, setOllamaProgress] = useState<number>(0);
     const [pullError, setPullError] = useState<string | null>(null);
     const [settings, setSettings] = useState<AppSettings>({
@@ -41,7 +42,15 @@ export function Dashboard() {
         checkOllama();
 
         const unlistenOllama = listen<number>('ollama-download-progress', (event) => {
-            setOllamaProgress(event.payload);
+            if (event.payload === -1) {
+                // Cancellation sentinel
+                setPullingModel(null);
+                setCancelling(false);
+                setOllamaProgress(0);
+                setPullError('Download cancelled.');
+            } else {
+                setOllamaProgress(event.payload);
+            }
         });
 
         return () => {
@@ -113,18 +122,28 @@ export function Dashboard() {
             if (match) updateSetting('llm_model', match);
         } else {
             setPullingModel(model.name);
+            setCancelling(false);
             setOllamaProgress(0);
             setPullError(null);
             try {
                 await invoke('pull_ollama_model', { modelName: model.name });
                 await refreshModels();
                 updateSetting('llm_model', model.name);
-            } catch (e) {
-                setPullError(`Failed to download ${model.label}: ${e}`);
+            } catch (e: any) {
+                if (!e?.toString().includes('cancelled')) {
+                    setPullError(`Failed to download ${model.label}: ${e}`);
+                }
             } finally {
                 setPullingModel(null);
+                setCancelling(false);
             }
         }
+    };
+
+    const handleCancelPull = async () => {
+        setCancelling(true);
+        await invoke('cancel_download');
+        // Rust emits -1.0 progress which resets state in the listener above
     };
 
     return (
@@ -240,9 +259,16 @@ export function Dashboard() {
                                             <div className="model-item-status pulling" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                                     <div className="mini-spinner" />
-                                                    <span>Downloading...</span>
+                                                    <span>{cancelling ? 'Cancelling…' : 'Downloading...'}</span>
                                                 </div>
                                                 <span className="font-mono text-xs" style={{ color: 'var(--accent-cyan)' }}>{ollamaProgress.toFixed(1)}%</span>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleCancelPull(); }}
+                                                    disabled={cancelling}
+                                                    style={{ fontSize: '0.7rem', padding: '2px 8px', marginTop: '2px', borderRadius: '4px', border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(239,68,68,0.08)', color: 'var(--accent-red, #ef4444)', cursor: cancelling ? 'not-allowed' : 'pointer', opacity: cancelling ? 0.5 : 1 }}
+                                                >
+                                                    {cancelling ? 'Cancelling…' : 'Cancel'}
+                                                </button>
                                             </div>
                                         ) : installed ? (
                                             <div className="model-item-status installed">
