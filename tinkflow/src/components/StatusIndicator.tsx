@@ -28,7 +28,7 @@ export function StatusIndicator({ isOverlay = false }: StatusIndicatorProps) {
     // mounts before the first "recording-state: listening" event arrives from Rust.
     // Real states (processing, transcribing, polishing, done) are NOT idle, so they
     // pass through this line unchanged and render correctly.
-    const displayStatus = isOverlay && status === 'idle' ? 'listening' : status;
+    const displayStatus = status;
 
     return (
         <div className={`status-indicator-container ${isVisible ? 'visible' : 'hidden'}`}>
