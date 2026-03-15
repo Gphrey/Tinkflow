@@ -19,7 +19,8 @@ export function useRecording() {
             } else {
                 console.warn('Unknown recording-state received:', payloadStr);
             }
-        });
+        // target: Any ensures this webview receives events from app.emit() global broadcast
+        }, { target: { kind: 'Any' } });
 
         // Cleanup listener on unmount
         return () => {
