@@ -1,4 +1,7 @@
+// ── Windows-only imports ─────────────────────────────────────────────────────
+#[cfg(target_os = "windows")]
 use std::ffi::OsString;
+#[cfg(target_os = "windows")]
 use std::os::windows::ffi::OsStringExt;
 
 /// Detects the current user context based on the active foreground window.
@@ -95,7 +98,10 @@ impl ContextDetector {
     }
 }
 
-/// Get the title of the currently focused foreground window on Windows.
+// ── Platform-specific foreground window title detection ───────────────────────
+
+/// Windows implementation using WinAPI.
+#[cfg(target_os = "windows")]
 fn get_foreground_window_title() -> Option<String> {
     unsafe {
         let hwnd = winapi::um::winuser::GetForegroundWindow();
@@ -117,4 +123,41 @@ fn get_foreground_window_title() -> Option<String> {
         let os_string = OsString::from_wide(&title_buf[..len as usize]);
         os_string.into_string().ok()
     }
+}
+
+/// macOS implementation using `osascript` to query System Events.
+/// Requires Accessibility permissions to be granted to the app.
+#[cfg(target_os = "macos")]
+fn get_foreground_window_title() -> Option<String> {
+    let output = std::process::Command::new("osascript")
+        .arg("-e")
+        .arg(
+            "tell application \"System Events\"\n\
+             set frontApp to first application process whose frontmost is true\n\
+             set appName to name of frontApp\n\
+             try\n\
+                 set windowTitle to name of front window of frontApp\n\
+                 return appName & \" - \" & windowTitle\n\
+             on error\n\
+                 return appName\n\
+             end try\n\
+             end tell",
+        )
+        .output()
+        .ok()?;
+
+    if output.status.success() {
+        String::from_utf8(output.stdout)
+            .ok()
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+    } else {
+        None
+    }
+}
+
+/// Fallback stub for all other platforms — returns None (context defaults to "general").
+#[cfg(not(any(target_os = "windows", target_os = "macos")))]
+fn get_foreground_window_title() -> Option<String> {
+    None
 }

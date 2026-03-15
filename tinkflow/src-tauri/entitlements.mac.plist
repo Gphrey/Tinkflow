@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!--
+        Required for enigo (text injection via keyboard simulation).
+        The user must grant Accessibility access in:
+        System Settings → Privacy & Security → Accessibility
+    -->
+    <key>com.apple.security.accessibility</key>
+    <true/>
+
+    <!--
+        Required to run as a standard app (not sandboxed).
+        Remove this if you intend to distribute via the Mac App Store.
+    -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+</dict>
+</plist>

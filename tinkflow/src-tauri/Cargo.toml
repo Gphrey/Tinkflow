@@ -23,7 +23,6 @@ tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-whisper-rs = { version = "0.15.1", features = ["vulkan"] }
 cpal = "0.17.3"
 enigo = "0.6.1"
 global-hotkey = "0.7.0"
@@ -33,6 +32,18 @@ rubato = "0.14.0"
 crossbeam-channel = "0.5.15"
 num_cpus = "1.17.0"
 hound = "3.5.1"
-winapi = { version = "0.3", features = ["winuser"] }
 aho-corasick = "1"
+
+# ── Windows-only dependencies ────────────────────────────────────────────────
+[target.'cfg(target_os = "windows")'.dependencies]
+# WinAPI for foreground-window title detection (context.rs)
+winapi = { version = "0.3", features = ["winuser"] }
+# GPU: Vulkan (active dev backend — CUDA disabled until drivers are fixed)
+# To enable CUDA in prod: features = ["cuda", "vulkan"]
+whisper-rs = { version = "0.15.1", features = ["vulkan"] }
+
+# ── macOS-only dependencies ──────────────────────────────────────────────────
+[target.'cfg(target_os = "macos")'.dependencies]
+# Metal GPU acceleration on Apple Silicon / Intel Mac
+whisper-rs = { version = "0.15.1", features = ["metal"] }
 
