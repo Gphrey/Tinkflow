@@ -1,0 +1,121 @@
+/* --- Settings View --- */
+.settings-view {
+    width: 100%;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: settingsFadeIn 0.35s ease-out;
+}
+
+@keyframes settingsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.settings-header {
+    margin-bottom: 0.25rem;
+}
+
+.settings-title {
+    font-size: 1.35rem;
+    background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0 0 0.25rem;
+}
+
+.settings-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.settings-section-title {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    font-weight: 500;
+    padding-left: 0.25rem;
+}
+
+.settings-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md, 10px);
+    padding: 0.85rem 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.settings-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.settings-select {
+    min-width: 160px;
+    max-width: 200px;
+    padding: 0.4rem 0.6rem;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm, 6px);
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.settings-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+}
+
+.settings-select option {
+    background: var(--bg-base);
+    color: var(--text-primary);
+}
+
+.setting-control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.setting-download-status {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.setting-version-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}

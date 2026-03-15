@@ -1,0 +1,141 @@
+/* --- Sidebar: Icon Rail Navigation --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width, 56px);
+    height: 100vh;
+    background: var(--bg-sidebar, #0a0a0c);
+    border-right: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    z-index: 40;
+    flex-shrink: 0;
+}
+
+.sidebar-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 0.5rem;
+    transition: background 0.2s ease;
+}
+
+.sidebar-logo:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+    padding: 0 0.5rem;
+}
+
+.sidebar-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted, #71717a);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.sidebar-nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary, #a1a1aa);
+}
+
+.sidebar-nav-item.active {
+    color: var(--accent-cyan, #24c8db);
+    background: rgba(36, 200, 219, 0.08);
+}
+
+.sidebar-nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    border-radius: 0 2px 2px 0;
+    background: var(--accent-cyan, #24c8db);
+    box-shadow: 0 0 8px rgba(36, 200, 219, 0.4);
+}
+
+.sidebar-nav-item:focus-visible {
+    outline: 2px solid var(--accent-cyan, #24c8db);
+    outline-offset: 2px;
+}
+
+.sidebar-nav-item svg {
+    flex-shrink: 0;
+}
+
+/* Tooltip on hover */
+.sidebar-nav-item::after {
+    content: attr(title);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-elevated, rgba(40, 40, 48, 0.95));
+    color: var(--text-primary, #ededef);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    transform: translateY(-50%) translateX(-4px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 50;
+}
+
+.sidebar-nav-item:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sidebar-version {
+    font-size: 0.6rem;
+    color: var(--text-muted, #71717a);
+    font-family: var(--font-mono);
+    opacity: 0.5;
+    letter-spacing: 0.04em;
+}
