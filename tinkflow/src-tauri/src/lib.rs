@@ -8,7 +8,13 @@ pub mod settings;
 pub mod whisper;
 
 use std::sync::{Arc, Mutex};
+use std::sync::atomic::{AtomicBool, Ordering};
 use tauri::Manager;
+
+/// Shared cancel flag for any in-progress model download.
+/// Set to `true` via the `cancel_download` command; reset to `false` at the
+/// start of each download so a previous cancel doesn't block future downloads.
+pub type DownloadCancelFlag = Arc<AtomicBool>;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -35,13 +41,26 @@ fn list_ollama_models(ollama: tauri::State<'_, Arc<Mutex<llm::OllamaClient>>>) -
 }
 
 #[tauri::command]
-async fn pull_ollama_model(app: tauri::AppHandle, model_name: String) -> Result<(), String> {
+async fn pull_ollama_model(
+    app: tauri::AppHandle,
+    model_name: String,
+    cancel_flag: tauri::State<'_, DownloadCancelFlag>,
+) -> Result<(), String> {
+    let flag = cancel_flag.inner().clone();
+    flag.store(false, Ordering::SeqCst); // reset any previous cancel
     tauri::async_runtime::spawn_blocking(move || {
         let client = crate::llm::OllamaClient::new();
-        client.pull_model(&model_name, &app)
+        client.pull_model(&model_name, &app, &flag)
     })
     .await
     .map_err(|e| e.to_string())?
+}
+
+/// Signal any active model download (Whisper or Ollama) to abort.
+#[tauri::command]
+fn cancel_download(cancel_flag: tauri::State<'_, DownloadCancelFlag>) {
+    cancel_flag.store(true, Ordering::SeqCst);
+    println!("[Download] Cancel signal sent.");
 }
 
 #[tauri::command]
@@ -82,6 +101,10 @@ fn get_audio_devices() -> Vec<String> {
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
+    // Register the shared download-cancel flag
+            let cancel_flag: DownloadCancelFlag = Arc::new(AtomicBool::new(false));
+            app.manage(cancel_flag);
+
             // Load persistent settings
             let settings_manager = Arc::new(settings::SettingsManager::new(app.handle()));
             app.manage(settings_manager.clone());
@@ -163,6 +186,7 @@ pub fn run() {
             check_ollama_status,
             list_ollama_models,
             pull_ollama_model,
+            cancel_download,
             get_app_settings,
             update_app_settings,
             get_audio_devices

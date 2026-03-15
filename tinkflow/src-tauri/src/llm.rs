@@ -202,6 +202,7 @@ NOW: Clean up the following input text.
         &self,
         model_name: &str,
         app_handle: &tauri::AppHandle,
+        cancel_flag: &std::sync::Arc<std::sync::atomic::AtomicBool>,
     ) -> Result<(), String> {
         #[derive(Serialize)]
         struct PullRequest {
@@ -241,6 +242,13 @@ NOW: Clean up the following input text.
         let reader = BufReader::new(&mut response);
 
         for line in reader.lines() {
+            // Check for cancellation on every NDJSON line
+            if cancel_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                let _ = app_handle.emit("ollama-download-progress", -1.0_f64);
+                println!("[Ollama] Pull cancelled by user.");
+                return Err("cancelled".to_string());
+            }
+
             let line = line.map_err(|e| format!("Error reading stream: {}", e))?;
             if line.is_empty() {
                 continue;

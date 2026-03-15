@@ -5,6 +5,7 @@ import { listen, Event } from '@tauri-apps/api/event';
 export function ModelManager() {
     const [modelExists, setModelExists] = useState<boolean | null>(null);
     const [downloading, setDownloading] = useState(false);
+    const [cancelling, setCancelling] = useState(false);
     const [progress, setProgress] = useState(0);
     const [error, setError] = useState<string | null>(null);
 
@@ -18,7 +19,15 @@ export function ModelManager() {
             });
 
         const unlisten = listen<number>('model-download-progress', (event: Event<number>) => {
-            setProgress(event.payload);
+            if (event.payload === -1) {
+                // Cancellation sentinel from Rust
+                setDownloading(false);
+                setCancelling(false);
+                setProgress(0);
+                setError('Download cancelled.');
+            } else {
+                setProgress(event.payload);
+            }
         });
 
         return () => {
@@ -29,15 +38,27 @@ export function ModelManager() {
     const handleDownload = async () => {
         try {
             setDownloading(true);
+            setCancelling(false);
             setError(null);
+            setProgress(0);
             await invoke('download_whisper_model', { modelName: 'tiny.en' });
             await invoke('load_whisper_model');
             setDownloading(false);
             setModelExists(true);
         } catch (err: any) {
             setDownloading(false);
-            setError(err.toString());
+            setCancelling(false);
+            // "cancelled" is a clean exit, not an error to display
+            if (!err?.toString().includes('cancelled')) {
+                setError(err.toString());
+            }
         }
+    };
+
+    const handleCancel = async () => {
+        setCancelling(true);
+        await invoke('cancel_download');
+        // Rust will emit progress -1.0, which resets state above
     };
 
     return (
@@ -70,12 +91,20 @@ export function ModelManager() {
                     {downloading ? (
                         <div className="progress-container mt-4">
                             <div className="flex justify-between text-sm mb-2 text-secondary">
-                                <span>Downloading model...</span>
+                                <span>{cancelling ? 'Cancelling…' : 'Downloading model...'}</span>
                                 <span className="font-mono">{progress.toFixed(1)}%</span>
                             </div>
                             <div className="progress-bar-bg" style={{ width: '100%', height: '6px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                                <div className="progress-bar-fg" style={{ width: `${progress}%`, height: '100%', background: 'var(--accent-cyan)', transition: 'width 0.2s cubic-bezier(0.16, 1, 0.3, 1)', boxShadow: '0 0 10px var(--accent-cyan-glow)' }}></div>
+                                <div className="progress-bar-fg" style={{ width: `${progress}%`, height: '100%', background: cancelling ? 'var(--accent-red)' : 'var(--accent-cyan)', transition: 'width 0.2s cubic-bezier(0.16, 1, 0.3, 1)', boxShadow: '0 0 10px var(--accent-cyan-glow)' }}></div>
                             </div>
+                            <button
+                                className="secondary-btn w-full mt-3"
+                                onClick={handleCancel}
+                                disabled={cancelling}
+                                style={{ opacity: cancelling ? 0.5 : 1 }}
+                            >
+                                {cancelling ? 'Cancelling…' : 'Cancel Download'}
+                            </button>
                         </div>
                     ) : (
                         <button className="primary-btn w-full mt-4" onClick={handleDownload}>

@@ -31,11 +31,6 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "windows": {
-      "nsis": {
-        "licenseFile": "../LICENSE"
-      }
-    },
     "macOS": {
       "entitlements": "entitlements.mac.plist",
       "minimumSystemVersion": "10.15"

@@ -252,6 +252,7 @@ pub fn list_installed_whisper_models(
 pub async fn download_whisper_model(
     app: tauri::AppHandle,
     model_name: String,
+    cancel_flag: tauri::State<'_, crate::DownloadCancelFlag>,
 ) -> Result<(), String> {
     let path = get_model_path(&app, &model_name)?;
     if path.exists() {
@@ -267,8 +268,13 @@ pub async fn download_whisper_model(
 
     let tmp_path = path.with_extension("bin.tmp");
 
+    // Reset the cancel flag before starting
+    let flag = cancel_flag.inner().clone();
+    flag.store(false, std::sync::atomic::Ordering::SeqCst);
+
     tauri::async_runtime::spawn_blocking(move || {
         use std::io::Write;
+        use std::sync::atomic::Ordering;
 
         let client = reqwest::blocking::Client::new();
         let mut response = client
@@ -292,6 +298,15 @@ pub async fn download_whisper_model(
         let mut last_emit = 0.0_f64;
 
         loop {
+            // Check for cancellation before every chunk
+            if flag.load(Ordering::SeqCst) {
+                drop(file);
+                let _ = std::fs::remove_file(&tmp_path); // clean up partial file
+                let _ = app.emit("model-download-progress", -1.0_f64); // sentinel for cancelled
+                println!("[Whisper] Download cancelled by user.");
+                return Err("cancelled".to_string());
+            }
+
             let bytes_read = std::io::Read::read(&mut response, &mut buffer)
                 .map_err(|e| e.to_string())?;
             if bytes_read == 0 {
