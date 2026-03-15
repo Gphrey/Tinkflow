@@ -1,3 +1,4 @@
+import { openUrl } from '@tauri-apps/plugin-opener';
 import '../styles/sidebar.css';
 
 interface SidebarProps {
@@ -47,6 +48,20 @@ export function Sidebar({ activeView, onNavigate }: SidebarProps) {
             </div>
 
             <div className="sidebar-bottom">
+                {/* LinkedIn — opens in system browser via Tauri opener */}
+                <button
+                    className="sidebar-linkedin"
+                    title="Built by Godfrey Ebifegha"
+                    aria-label="LinkedIn profile"
+                    onClick={() => openUrl('https://www.linkedin.com/in/godfrey-ebifegha-631339231/')}
+                >
+                    {/* LinkedIn 'in' logo */}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect x="2" y="9" width="4" height="12" />
+                        <circle cx="4" cy="4" r="2" />
+                    </svg>
+                </button>
                 <div className="sidebar-version">v0.1</div>
             </div>
         </nav>

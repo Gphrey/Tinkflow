@@ -139,3 +139,24 @@
     opacity: 0.5;
     letter-spacing: 0.04em;
 }
+
+.sidebar-linkedin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted, #71717a);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.sidebar-linkedin:hover {
+    color: #0a66c2;
+    background: rgba(10, 102, 194, 0.12);
+    transform: scale(1.1);
+}
