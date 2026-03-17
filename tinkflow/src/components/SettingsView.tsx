@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { enable, disable, isEnabled } from '@tauri-apps/plugin-autostart';
 import '../styles/settings.css';
 
 interface AppSettings {
     whisper_model: string;
     llm_model: string;
     audio_device_name: string;
+    launch_at_startup: boolean;
+    onboarding_completed: boolean;
 }
 
 const WHISPER_MODELS = [
@@ -21,11 +24,14 @@ export function SettingsView() {
         whisper_model: 'tiny.en',
         llm_model: '',
         audio_device_name: 'default',
+        launch_at_startup: false,
+        onboarding_completed: false,
     });
     const [audioDevices, setAudioDevices] = useState<string[]>(['default']);
     const [installedWhisperModels, setInstalledWhisperModels] = useState<string[]>([]);
     const [pullingWhisper, setPullingWhisper] = useState<boolean>(false);
     const [whisperProgress, setWhisperProgress] = useState<number>(0);
+    const [autoStartEnabled, setAutoStartEnabled] = useState<boolean>(false);
 
     useEffect(() => {
         loadSettingsAndDevices();
@@ -47,18 +53,42 @@ export function SettingsView() {
             setAudioDevices(devices);
             const whisperList = await invoke<string[]>('list_installed_whisper_models');
             setInstalledWhisperModels(whisperList);
+
+            // Sync autostart toggle from the OS-level plugin (source of truth)
+            try {
+                const enabled = await isEnabled();
+                setAutoStartEnabled(enabled);
+            } catch {
+                setAutoStartEnabled(currentSettings.launch_at_startup);
+            }
         } catch (e) {
             console.error("Failed to load settings:", e);
         }
     };
 
-    const updateSetting = async (key: keyof AppSettings, value: string) => {
+    const updateSetting = async (key: keyof AppSettings, value: string | boolean) => {
         const newSettings = { ...settings, [key]: value };
         setSettings(newSettings);
         try {
             await invoke('update_app_settings', { newSettings });
         } catch (e) {
             console.error("Failed to save settings:", e);
+        }
+    };
+
+    const handleAutoStartToggle = async (checked: boolean) => {
+        setAutoStartEnabled(checked);
+        try {
+            if (checked) {
+                await enable();
+            } else {
+                await disable();
+            }
+            await updateSetting('launch_at_startup', checked);
+        } catch (e) {
+            console.error('Failed to toggle autostart:', e);
+            // Revert on failure
+            setAutoStartEnabled(!checked);
         }
     };
 
@@ -80,6 +110,28 @@ export function SettingsView() {
             <div className="settings-header">
                 <h1 className="settings-title">Settings</h1>
                 <p className="settings-subtitle">Configure your Tinkflow experience</p>
+            </div>
+
+            {/* General Section */}
+            <div className="settings-section">
+                <h3 className="settings-section-title">General</h3>
+
+                <div className="settings-card">
+                    <div className="setting-row">
+                        <div className="setting-info">
+                            <span className="setting-label">Launch at Startup</span>
+                            <span className="setting-desc">Automatically start Tinkflow when your computer boots</span>
+                        </div>
+                        <label className="toggle-switch">
+                            <input
+                                type="checkbox"
+                                checked={autoStartEnabled}
+                                onChange={(e) => handleAutoStartToggle(e.target.checked)}
+                            />
+                            <span className="toggle-slider" />
+                        </label>
+                    </div>
+                </div>
             </div>
 
             {/* Dictation Section */}
@@ -189,3 +241,4 @@ export function SettingsView() {
         </div>
     );
 }
+

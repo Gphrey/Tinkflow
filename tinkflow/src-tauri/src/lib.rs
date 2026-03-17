@@ -105,9 +105,41 @@ pub fn run() {
             let cancel_flag: DownloadCancelFlag = Arc::new(AtomicBool::new(false));
             app.manage(cancel_flag);
 
+            // Set custom window icon (embedded at compile time)
+            if let Some(main_window) = app.get_webview_window("main") {
+                let icon_bytes = include_bytes!("../icons/icon.png");
+                let icon = tauri::image::Image::from_bytes(icon_bytes)
+                    .expect("failed to load embedded icon");
+                let _ = main_window.set_icon(icon);
+            }
+
+            // Register the autostart plugin (desktop only)
+            #[cfg(desktop)]
+            {
+                use tauri_plugin_autostart::MacosLauncher;
+                app.handle().plugin(tauri_plugin_autostart::init(
+                    MacosLauncher::LaunchAgent,
+                    None,
+                ))?;
+            }
+
             // Load persistent settings
             let settings_manager = Arc::new(settings::SettingsManager::new(app.handle()));
             app.manage(settings_manager.clone());
+
+            // Sync OS autostart state with persisted setting
+            #[cfg(desktop)]
+            {
+                use tauri_plugin_autostart::ManagerExt;
+                let autolaunch = app.autolaunch();
+                let should_autostart = settings_manager.get().launch_at_startup;
+                let is_enabled = autolaunch.is_enabled().unwrap_or(false);
+                if should_autostart && !is_enabled {
+                    let _ = autolaunch.enable();
+                } else if !should_autostart && is_enabled {
+                    let _ = autolaunch.disable();
+                }
+            }
 
             // Instantiate Audio Capturer with a default VAD RMS threshold of 0.002
             let audio_capturer = Arc::new(Mutex::new(crate::audio::AudioCapturer::new(0.002, settings_manager.clone())));

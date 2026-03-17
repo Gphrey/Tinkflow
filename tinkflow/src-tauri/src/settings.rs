@@ -9,6 +9,10 @@ pub struct AppSettings {
     pub whisper_model: String,
     pub llm_model: String,
     pub audio_device_name: String,
+    #[serde(default)]
+    pub launch_at_startup: bool,
+    #[serde(default)]
+    pub onboarding_completed: bool,
 }
 
 impl Default for AppSettings {
@@ -17,6 +21,8 @@ impl Default for AppSettings {
             whisper_model: "tiny.en".to_string(),
             llm_model: "".to_string(),
             audio_device_name: "default".to_string(),
+            launch_at_startup: false,
+            onboarding_completed: false,
         }
     }
 }

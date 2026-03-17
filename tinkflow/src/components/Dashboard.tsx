@@ -7,6 +7,7 @@ interface AppSettings {
     whisper_model: string;
     llm_model: string;
     audio_device_name: string;
+    onboarding_completed: boolean;
 }
 
 /** Curated list of recommended models for text polishing — lightweight and fast */
@@ -30,6 +31,7 @@ export function Dashboard() {
         whisper_model: 'tiny.en',
         llm_model: '',
         audio_device_name: 'default',
+        onboarding_completed: false,
     });
 
     // Derived: models installed by user that aren't in RECOMMENDED_MODELS

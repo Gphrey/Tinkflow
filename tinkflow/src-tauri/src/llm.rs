@@ -148,7 +148,22 @@ impl OllamaClient {
 <output>Use the @param decorator for validation.</output>
 </example>
 
-NOW: Clean up the following input text.
+<example id="5">
+<input>I think we need to see LLM also like an addition for it to be able to do a bit of grammar and spelling check so that when the final words come out it comes out really close</input>
+<output>I think we need the LLM to also do grammar and spelling checks, so the final output comes out really close to what was intended.</output>
+</example>
+
+<example id="6">
+<input>you know we start with pick up anything and then think some things to mean words</input>
+<output>We start by picking up everything, and then some things end up as the wrong words.</output>
+</example>
+
+<example id="7">
+<input>it does not get the context wrong wherever the words that have been spoken is being used it will not be published</input>
+<output>It should not get the context wrong. Wherever the spoken words are used, they should be accurate before being inserted.</output>
+</example>
+
+NOW: Clean up the following input text. Fix any misheard words using context.
 <input>{}</input>
 <output>"#,
             raw_text
@@ -285,18 +300,23 @@ NOW: Clean up the following input text.
 /// [`OllamaClient::polish_text`] do the real teaching.
 fn build_system_prompt(context: &str) -> String {
     let context_hint = match context {
-        "code" => "Preserve technical terms exactly.",
-        "comment" => "Write clean professional English.",
+        "code" => "Preserve technical terms, function names, and code symbols exactly.",
+        "comment" => "Write clean professional English suitable for code comments.",
         "chat" => "Keep the tone casual and concise.",
         "email" => "Use professional tone and grammar.",
-        "terminal" => "Keep output concise.",
-        _ => "Fix grammar and punctuation.",
+        "terminal" => "Keep output concise and command-like.",
+        _ => "Use correct grammar and natural phrasing.",
     };
 
     format!(
-        "Clean up the INPUT text. Remove filler words. Fix grammar. \
+        "You are a transcription corrector. The input is speech-to-text output that may contain: \
+         (1) filler words (uh, um, like, so, you know) — remove them. \
+         (2) Misheard or wrong words from speech recognition — fix them using surrounding context \
+         (e.g. \"think\" should be \"thing\", \"their\" should be \"there\"). \
+         (3) Grammar and punctuation errors — correct them. \
+         (4) Awkward phrasing from spoken language — make it read naturally. \
          Preserve all code symbols (@, #, =>, ===) and technical terms exactly as they appear. \
-         Do NOT replace symbols with English words. \
+         Do NOT replace symbols with English words. Do NOT change the meaning or add new ideas. \
          Output ONLY the cleaned text inside <output></output> tags. \
          No explanations. No commentary. {}",
         context_hint
@@ -484,7 +504,7 @@ mod tests {
     #[test]
     fn system_prompt_fallback_context() {
         let prompt = build_system_prompt("unknown_context");
-        assert!(prompt.contains("Fix grammar"));
+        assert!(prompt.contains("correct grammar"));
     }
 
     // ── OllamaClient construction ────────────────────────────────────────
