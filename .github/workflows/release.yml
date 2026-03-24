@@ -90,6 +90,12 @@ jobs:
         shell: pwsh
         run: echo "CMAKE_GENERATOR=Ninja" >> $env:GITHUB_ENV
 
+      # Windows: Bypass MSVC 260-character MAX_PATH limit for heavily nested CMake targets
+      - name: Set Short Target Directory (Windows MAX_PATH fix)
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        run: echo "CARGO_TARGET_DIR=D:\a\t" >> $env:GITHUB_ENV
+
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
