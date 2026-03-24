@@ -61,12 +61,17 @@ jobs:
         if: matrix.platform == 'macos-latest' && matrix.rust_target != ''
         run: rustup target add ${{ matrix.rust_target }}
 
+      # macOS: install CMake for whisper-rs-sys native compilation
+      - name: Install CMake (macOS)
+        if: matrix.platform == 'macos-latest'
+        run: brew install cmake
+
       # Windows: install Vulkan SDK for whisper-rs Vulkan feature
       - name: Install Vulkan SDK (Windows)
         if: matrix.platform == 'windows-latest'
         shell: pwsh
         run: |
-          $ver = "1.4.304.1"
+          $ver = "1.4.341.1"
           $url = "https://sdk.lunarg.com/sdk/download/$ver/windows/VulkanSDK-$ver-Installer.exe"
           Invoke-WebRequest -Uri $url -OutFile VulkanSDK.exe
           Start-Process -FilePath .\VulkanSDK.exe -ArgumentList "--accept-licenses --default-answer --confirm-command install" -Wait
