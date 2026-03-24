@@ -13,6 +13,12 @@ pub struct AppSettings {
     pub launch_at_startup: bool,
     #[serde(default)]
     pub onboarding_completed: bool,
+    #[serde(default = "default_hotkey")]
+    pub dictation_hotkey: String,
+}
+
+fn default_hotkey() -> String {
+    "Ctrl+Space".to_string()
 }
 
 impl Default for AppSettings {
@@ -23,6 +29,7 @@ impl Default for AppSettings {
             audio_device_name: "default".to_string(),
             launch_at_startup: false,
             onboarding_completed: false,
+            dictation_hotkey: default_hotkey(),
         }
     }
 }

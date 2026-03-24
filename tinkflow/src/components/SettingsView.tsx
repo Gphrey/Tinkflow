@@ -10,6 +10,7 @@ interface AppSettings {
     audio_device_name: string;
     launch_at_startup: boolean;
     onboarding_completed: boolean;
+    dictation_hotkey: string;
 }
 
 const WHISPER_MODELS = [
@@ -26,6 +27,7 @@ export function SettingsView() {
         audio_device_name: 'default',
         launch_at_startup: false,
         onboarding_completed: false,
+        dictation_hotkey: 'Ctrl+Space',
     });
     const [audioDevices, setAudioDevices] = useState<string[]>(['default']);
     const [installedWhisperModels, setInstalledWhisperModels] = useState<string[]>([]);
@@ -144,9 +146,16 @@ export function SettingsView() {
                             <span className="setting-label">Global Hotkey</span>
                             <span className="setting-desc">Hold to record, release to transcribe</span>
                         </div>
-                        <div className="setting-value">
-                            <kbd>Ctrl</kbd>+<kbd>Space</kbd>
-                        </div>
+                        <select
+                            className="settings-select"
+                            value={settings.dictation_hotkey || 'Ctrl+Space'}
+                            onChange={(e) => updateSetting('dictation_hotkey', e.target.value)}
+                        >
+                            <option value="Ctrl+Space">Ctrl + Space</option>
+                            <option value="Alt+Space">Alt + Space</option>
+                            <option value="Shift+Space">Shift + Space</option>
+                            <option value="Super+Space">Super + Space (Cmd/Win)</option>
+                        </select>
                     </div>
                 </div>
 

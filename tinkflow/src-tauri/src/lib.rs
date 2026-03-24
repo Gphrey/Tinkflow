@@ -72,13 +72,23 @@ fn get_app_settings(settings_manager: tauri::State<'_, Arc<settings::SettingsMan
 fn update_app_settings(
     settings_manager: tauri::State<'_, Arc<settings::SettingsManager>>, 
     whisper_state: tauri::State<'_, Arc<Mutex<whisper::WhisperTranscriber>>>,
+    active_id: tauri::State<'_, ActiveHotkeyId>,
     app: tauri::AppHandle,
     new_settings: settings::AppSettings
 ) -> Result<(), String> {
     let current_settings = settings_manager.get();
     let whisper_changed = current_settings.whisper_model != new_settings.whisper_model;
+    let hotkey_changed = current_settings.dictation_hotkey != new_settings.dictation_hotkey;
 
     settings_manager.update(new_settings.clone())?;
+
+    if hotkey_changed {
+        let hotkey_str = new_settings.dictation_hotkey.clone();
+        let active_id_clone = active_id.0.clone();
+        let _ = app.run_on_main_thread(move || {
+            hotkey::HotkeyListener::update_hotkey_on_main_thread(&hotkey_str, &active_id_clone);
+        });
+    }
 
     if whisper_changed {
         if let Ok(path) = whisper::get_model_path(&app, &new_settings.whisper_model) {
@@ -97,11 +107,13 @@ fn get_audio_devices() -> Vec<String> {
     crate::audio::list_input_devices()
 }
 
+pub struct ActiveHotkeyId(pub Arc<std::sync::atomic::AtomicU32>);
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
-    // Register the shared download-cancel flag
+            // Register the shared download-cancel flag
             let cancel_flag: DownloadCancelFlag = Arc::new(AtomicBool::new(false));
             app.manage(cancel_flag);
 
@@ -159,15 +171,15 @@ pub fn run() {
             let ollama_client = Arc::new(Mutex::new(llm::OllamaClient::new()));
             app.manage(ollama_client.clone());
 
-            // Initialize the global hotkey state and leak it to keep it alive indefinitely
-            let hotkey_manager = hotkey::HotkeyManager::new(
+            // Initialize the global hotkey state natively on the main UI thread
+            let active_id = hotkey::HotkeyListener::init_on_main_thread(
                 app.handle().clone(),
                 audio_capturer,
                 whisper_state,
                 ollama_client,
                 settings_manager.clone(),
             );
-            Box::leak(Box::new(hotkey_manager));
+            app.manage(ActiveHotkeyId(active_id));
 
             // Create the overlay window programmatically for proper WebView2 transparency on Windows
             let overlay_width = 300.0_f64;

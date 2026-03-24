@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "tinkflow",
+  "productName": "Tinkflow",
   "version": "0.1.0",
   "identifier": "com.admin.tinkflow",
   "build": {
