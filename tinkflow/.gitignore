@@ -24,6 +24,9 @@ dist-ssr
 *.sw?
 .agent
 
+# Machine-specific Cargo config (contains local target-dir paths)
+src-tauri/.cargo/config.toml
+
 # Docs
 00_tinkflow_research.md
 01_market_research.md

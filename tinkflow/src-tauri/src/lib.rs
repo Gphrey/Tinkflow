@@ -180,12 +180,17 @@ pub fn run() {
             )
             .title("Tinkflow Overlay")
             .inner_size(overlay_width, overlay_height)
-            .transparent(true)
             .decorations(false)
             .always_on_top(true)
             .skip_taskbar(true)
             .visible(false) // Hidden by default, shown when recording
             .resizable(false);
+
+            // WebView2 transparency (Windows-only)
+            #[cfg(target_os = "windows")]
+            {
+                builder = builder.transparent(true);
+            }
 
             // Position at the bottom center of the primary monitor
             if let Some(monitor) = app.primary_monitor().ok().flatten() {
@@ -197,12 +202,13 @@ pub fn run() {
                 builder = builder.center();
             }
 
-            let overlay = builder.build();
-
-            if let Ok(overlay_win) = overlay {
-                let _ = overlay_win.set_ignore_cursor_events(true);
-            } else {
-                eprintln!("Failed to create overlay window: {:?}", overlay.err());
+            match builder.build() {
+                Ok(overlay_win) => {
+                    let _ = overlay_win.set_ignore_cursor_events(true);
+                }
+                Err(e) => {
+                    eprintln!("Failed to create overlay window: {:?}", e);
+                }
             }
             
             Ok(())
