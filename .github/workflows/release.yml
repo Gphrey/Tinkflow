@@ -65,10 +65,15 @@ jobs:
       # Windows: install Vulkan SDK for whisper-rs Vulkan feature
       - name: Install Vulkan SDK (Windows)
         if: matrix.platform == 'windows-latest'
-        uses: humbletim/install-vulkan-sdk@v1.2.1
-        with:
-          version: latest
-          cache: true
+        shell: pwsh
+        run: |
+          $ver = "1.4.304.1"
+          $url = "https://sdk.lunarg.com/sdk/download/$ver/windows/VulkanSDK-$ver-Installer.exe"
+          Invoke-WebRequest -Uri $url -OutFile VulkanSDK.exe
+          Start-Process -FilePath .\VulkanSDK.exe -ArgumentList "--accept-licenses --default-answer --confirm-command install" -Wait
+          $sdkPath = "C:\VulkanSDK\$ver"
+          echo "VULKAN_SDK=$sdkPath" >> $env:GITHUB_ENV
+          echo "$sdkPath\Bin" >> $env:GITHUB_PATH
 
       # Windows: install Ninja for CMake builds (whisper-rs-sys)
       - name: Install Ninja (Windows)
