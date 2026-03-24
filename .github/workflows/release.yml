@@ -34,6 +34,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     env:
       CCACHE_DISABLE: 1
+      SOURCE_DATE_EPOCH: 1
 
     steps:
       - name: Checkout repository
@@ -77,17 +78,6 @@ jobs:
           optional_components: com.lunarg.vulkan.vma
           install_runtime: true
           cache: true
-
-      # Windows: install Ninja for CMake builds (whisper-rs-sys)
-      - name: Install Ninja (Windows)
-        if: matrix.platform == 'windows-latest'
-        run: choco install ninja -y
-
-      # Windows: set CMake to use Ninja (avoids MSVC detection issues)
-      - name: Set CMAKE_GENERATOR (Windows)
-        if: matrix.platform == 'windows-latest'
-        shell: pwsh
-        run: echo "CMAKE_GENERATOR=Ninja" >> $env:GITHUB_ENV
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
