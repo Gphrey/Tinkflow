@@ -47,6 +47,11 @@ whisper-rs = { version = "0.15.1", features = ["vulkan"] }
 # Metal GPU acceleration on Apple Silicon / Intel Mac
 whisper-rs = { version = "0.15.1", features = ["metal"] }
 
+# ── Linux-only dependencies ──────────────────────────────────────────────────
+[target.'cfg(target_os = "linux")'.dependencies]
+# CPU-only (no GPU feature needed for Linux CI builds)
+whisper-rs = { version = "0.15.1" }
+
 # ── Desktop-only dependencies (Windows + macOS + Linux) ─────────────────────
 [target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
 tauri-plugin-autostart = "2"
