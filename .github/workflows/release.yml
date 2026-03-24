@@ -32,6 +32,8 @@ jobs:
             rust_target: ''
 
     runs-on: ${{ matrix.platform }}
+    env:
+      CCACHE_DISABLE: 1
 
     steps:
       - name: Checkout repository
