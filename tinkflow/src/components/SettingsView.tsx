@@ -145,7 +145,7 @@ export function SettingsView() {
                             <span className="setting-desc">Hold to record, release to transcribe</span>
                         </div>
                         <div className="setting-value">
-                            <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd>
+                            <kbd>Ctrl</kbd>+<kbd>Space</kbd>
                         </div>
                     </div>
                 </div>

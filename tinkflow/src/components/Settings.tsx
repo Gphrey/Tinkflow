@@ -6,7 +6,7 @@ export function Settings() {
             <div className="settings-group">
                 <label>
                     Dictation Hotkey:
-                    <input type="text" value="Ctrl+Shift+Space" readOnly />
+                    <input type="text" value="Ctrl+Space" readOnly />
                 </label>
             </div>
 

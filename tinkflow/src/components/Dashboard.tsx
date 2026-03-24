@@ -171,7 +171,7 @@ export function Dashboard() {
                 </div>
                 <div className="hotkey-display-inline">
                     <span>Hold</span>
-                    <kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>Space</kbd>
+                    <kbd>Ctrl</kbd><span>+</span><kbd>Space</kbd>
                     <span>to dictate</span>
                 </div>
                 <p className="dash-hint">Speak naturally, then release. Text appears where your cursor is.</p>

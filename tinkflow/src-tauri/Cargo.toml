@@ -36,20 +36,15 @@ aho-corasick = "1"
 
 # ── Windows-only dependencies ────────────────────────────────────────────────
 [target.'cfg(target_os = "windows")'.dependencies]
-# WinAPI for foreground-window title detection (context.rs)
 winapi = { version = "0.3", features = ["winuser"] }
-# GPU: Vulkan (active dev backend — CUDA disabled until drivers are fixed)
-# To enable CUDA in prod: features = ["cuda", "vulkan"]
 whisper-rs = { version = "0.15.1", features = ["vulkan"] }
 
 # ── macOS-only dependencies ──────────────────────────────────────────────────
 [target.'cfg(target_os = "macos")'.dependencies]
-# Metal GPU acceleration on Apple Silicon / Intel Mac
 whisper-rs = { version = "0.15.1", features = ["metal"] }
 
 # ── Linux-only dependencies ──────────────────────────────────────────────────
 [target.'cfg(target_os = "linux")'.dependencies]
-# CPU-only (no GPU feature needed for Linux CI builds)
 whisper-rs = { version = "0.15.1" }
 
 # ── Desktop-only dependencies (Windows + macOS + Linux) ─────────────────────

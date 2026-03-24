@@ -189,7 +189,7 @@ export function Onboarding({ onComplete }: { onComplete?: () => void }) {
 
                             <div className="hotkey-display">
                                 <span>Press</span>
-                                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>
+                                <kbd>Ctrl</kbd> + <kbd>Space</kbd>
                                 <span>to dictate</span>
                             </div>
 

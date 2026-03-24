@@ -15,6 +15,7 @@
         opacity: 0;
         transform: translateY(6px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -188,18 +189,17 @@
     transition: transform 0.25s ease, background 0.25s ease;
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.toggle-switch input:checked+.toggle-slider {
     background: rgba(99, 102, 241, 0.5);
     border-color: rgba(99, 102, 241, 0.6);
 }
 
-.toggle-switch input:checked + .toggle-slider::before {
+.toggle-switch input:checked+.toggle-slider::before {
     transform: translateX(18px);
     background: #818cf8;
 }
 
-.toggle-switch input:focus-visible + .toggle-slider {
+.toggle-switch input:focus-visible+.toggle-slider {
     outline: 2px solid var(--border-focus);
     outline-offset: 2px;
 }
-

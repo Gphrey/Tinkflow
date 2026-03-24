@@ -33,10 +33,10 @@ impl HotkeyManager {
     ) -> Self {
         let manager = GlobalHotKeyManager::new().expect("Failed to initialize GlobalHotKeyManager");
         
-        // Ctrl + Shift + Space
-        let hotkey = HotKey::new(Some(Modifiers::CONTROL | Modifiers::SHIFT), Code::Space);
+        // Ctrl + Space
+        let hotkey = HotKey::new(Some(Modifiers::CONTROL), Code::Space);
         if let Err(e) = manager.register(hotkey) {
-            eprintln!("Warning: Failed to register hotkey Ctrl+Shift+Space. It may already be in use by another application or an old instance of Tinkflow. Error: {:?}", e);
+            eprintln!("Warning: Failed to register hotkey Ctrl+Space. It may already be in use by another application or an old instance of Tinkflow. Error: {:?}", e);
         }
 
         let is_recording = Arc::new(AtomicBool::new(false));
