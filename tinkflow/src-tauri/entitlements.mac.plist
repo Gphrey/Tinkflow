@@ -2,19 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!--
-        Required for enigo (text injection via keyboard simulation).
-        The user must grant Accessibility access in:
-        System Settings → Privacy & Security → Accessibility
-    -->
+    <!-- Not sandboxed (required for global hotkeys + CLI tools like Ollama) -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+
+    <!-- Accessibility: required for enigo (text injection via keyboard simulation) -->
     <key>com.apple.security.accessibility</key>
     <true/>
 
-    <!--
-        Required to run as a standard app (not sandboxed).
-        Remove this if you intend to distribute via the Mac App Store.
-    -->
-    <key>com.apple.security.app-sandbox</key>
-    <false/>
+    <!-- Microphone: required for audio recording via cpal -->
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+
+    <!-- Apple Events: needed for context detection (foreground window title via osascript) -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
 </dict>
 </plist>
