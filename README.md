@@ -27,7 +27,7 @@ Tinkflow is a lightning-fast, keyboard-driven voice assistant application built 
 
 ## Usage
 - Open the Tinkflow app.
-- Press and hold `Ctrl+Shift+Space` anywhere on your system to start recording. The app UI should show "Listening...".
+- Press and hold `Ctrl+Space` anywhere on your system to start recording. The app UI should show "Listening...".
 - Release the hotkey to stop recording. The app UI should show "Processing..." and the Rust backend will output the number of captured samples in the terminal.
 
 ## Architecture
