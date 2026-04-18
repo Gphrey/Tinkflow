@@ -15,6 +15,7 @@ use tauri::Manager;
 /// Set to `true` via the `cancel_download` command; reset to `false` at the
 /// start of each download so a previous cancel doesn't block future downloads.
 pub type DownloadCancelFlag = Arc<AtomicBool>;
+pub type RecordingStateStore = Arc<Mutex<String>>;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -107,6 +108,14 @@ fn get_audio_devices() -> Vec<String> {
     crate::audio::list_input_devices()
 }
 
+#[tauri::command]
+fn get_recording_state(recording_state: tauri::State<'_, RecordingStateStore>) -> Result<String, String> {
+    recording_state
+        .lock()
+        .map(|state| state.clone())
+        .map_err(|_| "Failed to access recording state".to_string())
+}
+
 pub struct ActiveHotkeyId(pub Arc<std::sync::atomic::AtomicU32>);
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -116,6 +125,10 @@ pub fn run() {
             // Register the shared download-cancel flag
             let cancel_flag: DownloadCancelFlag = Arc::new(AtomicBool::new(false));
             app.manage(cancel_flag);
+
+            // Keep the latest pipeline state available for windows that mount late.
+            let recording_state: RecordingStateStore = Arc::new(Mutex::new("idle".to_string()));
+            app.manage(recording_state.clone());
 
             // Set custom window icon (embedded at compile time)
             if let Some(main_window) = app.get_webview_window("main") {
@@ -178,6 +191,7 @@ pub fn run() {
                 whisper_state,
                 ollama_client,
                 settings_manager.clone(),
+                recording_state,
             );
             app.manage(ActiveHotkeyId(active_id));
 
@@ -239,7 +253,8 @@ pub fn run() {
             cancel_download,
             get_app_settings,
             update_app_settings,
-            get_audio_devices
+            get_audio_devices,
+            get_recording_state
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

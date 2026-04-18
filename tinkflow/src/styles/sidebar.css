@@ -33,11 +33,28 @@
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.03);
     margin-bottom: 0.5rem;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .sidebar-logo:hover {
     background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-logo-active {
+    background: rgba(36, 200, 219, 0.08);
+    box-shadow: 0 0 12px rgba(36, 200, 219, 0.15);
+}
+
+.sidebar-logo-active img {
+    filter: drop-shadow(0 0 4px rgba(36, 200, 219, 0.4));
+}
+
+.sidebar-logo:focus-visible {
+    outline: 2px solid var(--accent-cyan, #24c8db);
+    outline-offset: 2px;
 }
 
 .sidebar-nav {

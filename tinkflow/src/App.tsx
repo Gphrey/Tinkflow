@@ -5,6 +5,7 @@ import "./App.css";
 import { Onboarding } from "./components/Onboarding";
 import { Dashboard } from "./components/Dashboard";
 import { SettingsView } from "./components/SettingsView";
+import { Monitor } from "./components/Monitor";
 import { StatusIndicator } from "./components/StatusIndicator";
 import { Sidebar } from "./components/Sidebar";
 
@@ -25,7 +26,7 @@ interface AppSettings {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isOnboarded, setIsOnboarded] = useState(false);
-  const [activeView, setActiveView] = useState<'dashboard' | 'settings'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'settings' | 'monitor'>('dashboard');
 
   // Apply overlay CSS classes once on mount (no longer drives rendering logic)
   if (IS_OVERLAY) {
@@ -87,6 +88,7 @@ function App() {
           <main className="content-area">
             {activeView === 'dashboard' && <Dashboard />}
             {activeView === 'settings' && <SettingsView />}
+            {activeView === 'monitor' && <Monitor />}
           </main>
         </div>
       )}

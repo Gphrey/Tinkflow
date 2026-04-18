@@ -1,29 +1,55 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { listen } from '@tauri-apps/api/event';
+import { invoke } from '@tauri-apps/api/core';
 
 export type RecordingState = 'idle' | 'listening' | 'processing' | 'transcribing' | 'polishing' | 'loading-model' | 'error' | 'done';
 
+const VALID_STATES: readonly string[] = ['idle', 'listening', 'processing', 'transcribing', 'polishing', 'loading-model', 'error', 'done'];
+
 export function useRecording() {
     const [status, setStatus] = useState<RecordingState>('idle');
+    // Ref tracks latest status to avoid stale closures in the poll interval
+    const statusRef = useRef<RecordingState>('idle');
 
     useEffect(() => {
-        // Listen to "recording-state" events emitted from Rust backend (via hotkey)
-        const unlisten = listen<unknown>('recording-state', (event) => {
-            console.log('Received recording-state event from backend:', event.payload);
+        let isMounted = true;
 
-            // Clean up the string just in case there are quotes around it (due to serialization)
-            const payloadStr = String(event.payload).replace(/^["']|["']$/g, '');
+        const applyStatus = (nextStatus: unknown) => {
+            const payloadStr = String(nextStatus).replace(/^["']|["']$/g, '');
 
-            if (['idle', 'listening', 'processing', 'transcribing', 'polishing', 'loading-model', 'error', 'done'].includes(payloadStr)) {
-                setStatus(payloadStr as RecordingState);
-            } else {
-                console.warn('Unknown recording-state received:', payloadStr);
+            if (VALID_STATES.includes(payloadStr)) {
+                const next = payloadStr as RecordingState;
+                // Only update if the value actually changed (prevents unnecessary re-renders)
+                if (isMounted && statusRef.current !== next) {
+                    statusRef.current = next;
+                    setStatus(next);
+                }
             }
-        // target: Any ensures this webview receives events from app.emit() global broadcast
+        };
+
+        // Fetch initial state synchronously on mount
+        invoke<string>('get_recording_state')
+            .then(applyStatus)
+            .catch(() => {});
+
+        // Primary: event-driven updates (works reliably on the main window)
+        const unlisten = listen<unknown>('recording-state', (event) => {
+            applyStatus(event.payload);
         }, { target: { kind: 'Any' } });
 
-        // Cleanup listener on unmount
+        // Fallback: poll the Rust state store every 120ms.
+        // This guarantees overlay windows on WebView2 (Windows) stay in sync
+        // even when Tauri events aren't delivered to transparent/always-on-top
+        // windows with set_ignore_cursor_events(true).
+        const pollInterval = setInterval(() => {
+            invoke<string>('get_recording_state')
+                .then(applyStatus)
+                .catch(() => {});
+        }, 120);
+
         return () => {
+            isMounted = false;
+            clearInterval(pollInterval);
             unlisten.then((f) => f());
         };
     }, []);

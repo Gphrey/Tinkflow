@@ -2,18 +2,24 @@ import { openUrl } from '@tauri-apps/plugin-opener';
 import '../styles/sidebar.css';
 
 interface SidebarProps {
-    activeView: 'dashboard' | 'settings';
-    onNavigate: (view: 'dashboard' | 'settings') => void;
+    activeView: 'dashboard' | 'settings' | 'monitor';
+    onNavigate: (view: 'dashboard' | 'settings' | 'monitor') => void;
 }
 
 export function Sidebar({ activeView, onNavigate }: SidebarProps) {
     return (
         <nav className="sidebar" aria-label="Main navigation">
             <div className="sidebar-top">
-                {/* Logo */}
-                <div className="sidebar-logo">
+                {/* Logo — navigates to Pipeline Monitor */}
+                <button
+                    className={`sidebar-logo ${activeView === 'monitor' ? 'sidebar-logo-active' : ''}`}
+                    onClick={() => onNavigate('monitor')}
+                    title="Pipeline Monitor"
+                    aria-label="Pipeline Monitor"
+                    aria-current={activeView === 'monitor' ? 'page' : undefined}
+                >
                     <img src="/logo.png" alt="Tinkflow" width="22" height="22" style={{ objectFit: 'contain' }} />
-                </div>
+                </button>
 
                 {/* Navigation Items */}
                 <div className="sidebar-nav">

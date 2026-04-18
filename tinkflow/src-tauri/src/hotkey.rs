@@ -19,6 +19,26 @@ fn set_overlay_visible(app: &AppHandle, visible: bool) {
     }
 }
 
+fn emit_recording_state(
+    app: &AppHandle,
+    recording_state: &crate::RecordingStateStore,
+    state: &'static str,
+) {
+    if let Ok(mut current_state) = recording_state.lock() {
+        *current_state = state.to_string();
+    }
+
+    let _ = app.emit("recording-state", state);
+
+    if let Some(main) = app.get_webview_window("main") {
+        let _ = main.emit("recording-state", state);
+    }
+
+    if let Some(overlay) = app.get_webview_window("overlay") {
+        let _ = overlay.emit("recording-state", state);
+    }
+}
+
 pub fn parse_hotkey(s: &str) -> HotKey {
     match s {
         "Alt+Space" => HotKey::new(Some(Modifiers::ALT), Code::Space),
@@ -44,6 +64,7 @@ impl HotkeyListener {
         whisper: Arc<Mutex<WhisperTranscriber>>,
         ollama: Arc<Mutex<OllamaClient>>,
         settings_manager: Arc<crate::settings::SettingsManager>,
+        recording_state: crate::RecordingStateStore,
     ) -> Arc<std::sync::atomic::AtomicU32> {
         let manager = GlobalHotKeyManager::new().expect("Failed to initialize GlobalHotKeyManager");
         
@@ -83,20 +104,20 @@ impl HotkeyListener {
                                 }
                             }
                             
-                            let _ = app.emit("recording-state", "listening");
+                            emit_recording_state(&app, &recording_state, "listening");
                             set_overlay_visible(&app, true);
                         } else if event.state == global_hotkey::HotKeyState::Released && current_state {
                             is_recording.store(false, Ordering::SeqCst);
                             let my_session = session_id.load(Ordering::SeqCst);
                             println!("Hotkey released - Stop recording (session {})", my_session);
-                            let _ = app.emit("recording-state", "processing");
+                            emit_recording_state(&app, &recording_state, "processing");
                             
                             let audio_data_opt = if let Ok(mut capturer) = audio_capturer.lock() {
                                 match capturer.stop_recording() {
                                     Ok(data) => Some(data),
                                     Err(e) => {
                                         eprintln!("Error stopping recording: {}", e);
-                                        let _ = app.emit("recording-state", "error");
+                                        emit_recording_state(&app, &recording_state, "error");
                                         None
                                     }
                                 }
@@ -113,6 +134,7 @@ impl HotkeyListener {
                                     let ollama_bg = ollama.clone();
                                     let settings_manager_bg = settings_manager.clone();
                                     let session_id_bg = session_id.clone();
+                                    let recording_state_bg = recording_state.clone();
 
                                     std::thread::spawn(move || {
                                         macro_rules! guard {
@@ -129,7 +151,7 @@ impl HotkeyListener {
                                             guard!();
                                             if !whisper_guard.is_model_loaded() {
                                                 println!("Whisper model not loaded, attempting to load now...");
-                                                let _ = app_bg.emit("recording-state", "loading-model");
+                                                emit_recording_state(&app_bg, &recording_state_bg, "loading-model");
                                                 if let Err(e) = whisper_guard.load_model() {
                                                     eprintln!("Failed to load whisper model: {}", e);
                                                 }
@@ -137,7 +159,7 @@ impl HotkeyListener {
 
                                             if whisper_guard.is_model_loaded() {
                                                 guard!();
-                                                let _ = app_bg.emit("recording-state", "transcribing");
+                                                emit_recording_state(&app_bg, &recording_state_bg, "transcribing");
                                                 match whisper_guard.transcribe(&audio_data) {
                                                     Ok(raw_text) => {
                                                         println!("Transcribed: {}", raw_text);
@@ -149,7 +171,7 @@ impl HotkeyListener {
                                                         }
 
                                                         guard!();
-                                                        let _ = app_bg.emit("recording-state", "polishing");
+                                                        emit_recording_state(&app_bg, &recording_state_bg, "polishing");
                                                         let context = context_detector_bg.detect_current_context();
                                                         println!("Detected context: {}", context);
 
@@ -172,7 +194,7 @@ impl HotkeyListener {
                                                                 eprintln!("Injection error: {}", e);
                                                             } else {
                                                                 guard!();
-                                                                let _ = app_bg.emit("recording-state", "done");
+                                                                emit_recording_state(&app_bg, &recording_state_bg, "done");
                                                                 success = true;
                                                             }
                                                         } else {
@@ -181,19 +203,19 @@ impl HotkeyListener {
                                                     }
                                                     Err(e) => {
                                                         eprintln!("Whisper Error: {}", e);
-                                                        let _ = app_bg.emit("recording-state", "error");
+                                                        emit_recording_state(&app_bg, &recording_state_bg, "error");
                                                     }
                                                 }
                                             } else {
                                                 eprintln!("Whisper model is not loaded yet.");
-                                                let _ = app_bg.emit("recording-state", "error");
+                                                emit_recording_state(&app_bg, &recording_state_bg, "error");
                                             }
                                         }
 
                                         if session_id_bg.load(Ordering::SeqCst) == my_session {
                                             std::thread::sleep(std::time::Duration::from_millis(if success { 800 } else { 1500 }));
                                             if session_id_bg.load(Ordering::SeqCst) == my_session {
-                                                let _ = app_bg.emit("recording-state", "idle");
+                                                emit_recording_state(&app_bg, &recording_state_bg, "idle");
                                                 std::thread::sleep(std::time::Duration::from_millis(800));
                                                 set_overlay_visible(&app_bg, false);
                                             }
@@ -201,14 +223,15 @@ impl HotkeyListener {
                                     });
                                 } else {
                                     println!("Audio too short, discarded.");
-                                    let _ = app.emit("recording-state", "idle");
+                                    emit_recording_state(&app, &recording_state, "idle");
                                     set_overlay_visible(&app, false);
                                 }
                             } else {
                                 let app_clone = app.clone();
+                                let recording_state_clone = recording_state.clone();
                                 std::thread::spawn(move || {
                                     std::thread::sleep(std::time::Duration::from_millis(1500));
-                                    let _ = app_clone.emit("recording-state", "idle");
+                                    emit_recording_state(&app_clone, &recording_state_clone, "idle");
                                     std::thread::sleep(std::time::Duration::from_millis(800));
                                     set_overlay_visible(&app_clone, false);
                                 });

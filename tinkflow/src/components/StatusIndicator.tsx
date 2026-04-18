@@ -15,7 +15,7 @@ export function StatusIndicator({ isOverlay = false }: StatusIndicatorProps) {
             setIsVisible(true);
             return;
         }
-        if (status === 'listening' || status === 'processing' || status === 'transcribing' || status === 'polishing' || status === 'done') {
+        if (status === 'listening' || status === 'processing' || status === 'loading-model' || status === 'transcribing' || status === 'polishing' || status === 'done' || status === 'error') {
             setIsVisible(true);
         } else if (status === 'idle') {
             const timer = setTimeout(() => setIsVisible(false), 800);
@@ -28,7 +28,12 @@ export function StatusIndicator({ isOverlay = false }: StatusIndicatorProps) {
     // mounts before the first "recording-state: listening" event arrives from Rust.
     // Real states (processing, transcribing, polishing, done) are NOT idle, so they
     // pass through this line unchanged and render correctly.
-    const displayStatus = isOverlay && status === 'idle' ? 'listening' : status;
+    const displayStatus =
+        isOverlay && status === 'idle'
+            ? 'listening'
+            : status === 'loading-model'
+                ? 'processing'
+                : status;
 
     return (
         <div className={`status-indicator-container ${isVisible ? 'visible' : 'hidden'}`}>
