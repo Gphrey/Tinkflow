@@ -68,7 +68,7 @@ export function Sidebar({ activeView, onNavigate }: SidebarProps) {
                         <circle cx="4" cy="4" r="2" />
                     </svg>
                 </button>
-                <div className="sidebar-version">v0.1</div>
+                <div className="sidebar-version">v0.2.0</div>
             </div>
         </nav>
     );

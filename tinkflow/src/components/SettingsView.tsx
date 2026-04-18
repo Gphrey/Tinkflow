@@ -242,7 +242,7 @@ export function SettingsView() {
                             <span className="setting-desc">Voice-to-text for developers — local, private, fast</span>
                         </div>
                         <div className="setting-value">
-                            <span className="setting-version-badge">v0.1.0</span>
+                            <span className="setting-version-badge">v0.2.0</span>
                         </div>
                     </div>
                 </div>
