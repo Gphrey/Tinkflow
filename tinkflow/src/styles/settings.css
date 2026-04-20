@@ -1,25 +1,18 @@
 /* --- Settings View --- */
 .settings-view {
     width: 100%;
-    max-width: 580px;
+    max-width: 560px;
     margin: 0 auto;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    animation: settingsFadeIn 0.35s ease-out;
+    gap: 1.25rem;
+    animation: settingsFadeIn 0.25s ease-out;
 }
 
 @keyframes settingsFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .settings-header {
@@ -27,16 +20,13 @@
 }
 
 .settings-title {
-    font-size: 1.35rem;
-    background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin: 0 0 0.25rem;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin: 0 0 0.2rem;
 }
 
 .settings-subtitle {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     margin: 0;
     line-height: 1.4;
@@ -45,14 +35,14 @@
 .settings-section {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .settings-section-title {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     margin: 0;
     font-weight: 500;
     padding-left: 0.25rem;
@@ -61,33 +51,33 @@
 .settings-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md, 10px);
-    padding: 0.85rem 1rem;
-    transition: border-color 0.2s ease;
+    border-radius: var(--radius-md, 8px);
+    padding: 0.75rem 0.9rem;
+    transition: border-color 0.15s ease;
 }
 
 .settings-card:hover {
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.06);
 }
 
 .settings-select {
-    min-width: 160px;
-    max-width: 200px;
-    padding: 0.4rem 0.6rem;
+    min-width: 150px;
+    max-width: 180px;
+    padding: 0.35rem 0.55rem;
     background: var(--bg-base);
     color: var(--text-primary);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm, 6px);
-    font-size: 0.78rem;
+    border-radius: var(--radius-sm, 5px);
+    font-size: 0.75rem;
     font-family: var(--font-mono);
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.15s ease;
     flex-shrink: 0;
 }
 
 .settings-select:focus {
     outline: none;
-    border-color: var(--border-focus);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .settings-select option {
@@ -156,8 +146,8 @@
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 22px;
+    width: 36px;
+    height: 20px;
     flex-shrink: 0;
 }
 
@@ -171,35 +161,30 @@
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
-    border-radius: 22px;
-    transition: background 0.25s ease, border-color 0.25s ease;
+    border-radius: 20px;
+    transition: background 0.2s ease;
 }
 
 .toggle-slider::before {
     content: '';
     position: absolute;
-    height: 16px;
-    width: 16px;
+    height: 14px;
+    width: 14px;
     left: 2px;
     bottom: 2px;
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--text-muted);
     border-radius: 50%;
-    transition: transform 0.25s ease, background 0.25s ease;
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .toggle-switch input:checked+.toggle-slider {
-    background: rgba(99, 102, 241, 0.5);
-    border-color: rgba(99, 102, 241, 0.6);
+    background: var(--accent-cyan);
+    border-color: var(--accent-cyan);
 }
 
 .toggle-switch input:checked+.toggle-slider::before {
-    transform: translateX(18px);
-    background: #818cf8;
-}
-
-.toggle-switch input:focus-visible+.toggle-slider {
-    outline: 2px solid var(--border-focus);
-    outline-offset: 2px;
+    transform: translateX(16px);
+    background: #fff;
 }
