@@ -25,7 +25,7 @@ jobs:
             args: '--target x86_64-apple-darwin'
             rust_target: 'x86_64-apple-darwin'
           - platform: 'windows-latest'
-            args: ''
+            args: '--bundles nsis'
             rust_target: ''
           - platform: 'ubuntu-22.04'
             args: ''

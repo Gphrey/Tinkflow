@@ -98,10 +98,10 @@ Events emitted by Rust:
 
 ## Graphify Snapshot
 
-Graphify code-only graph as of 2026-07-26 after the v1.5 onboarding refresh:
+Graphify code-only graph as of 2026-07-26 after the v1.5 installer cleanup refresh:
 
-- 471 nodes
-- 711 edges
+- 474 nodes
+- 714 edges
 - 55 communities
 - 0 inferred edges
 - 0 token cost

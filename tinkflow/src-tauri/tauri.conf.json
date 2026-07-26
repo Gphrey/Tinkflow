@@ -42,6 +42,11 @@
     "macOS": {
       "entitlements": "entitlements.mac.plist",
       "minimumSystemVersion": "10.15"
+    },
+    "windows": {
+      "nsis": {
+        "installerHooks": "./windows/hooks.nsh"
+      }
     }
   }
 }

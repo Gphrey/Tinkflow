@@ -75,9 +75,9 @@
     "semantic_hash": "03a68a0c4f7b4b5b27fd2e4cc0e755ed"
   },
   "tinkflow/src-tauri/tauri.conf.json": {
-    "mtime": 1785084079.077665,
-    "ast_hash": "c840126240befd45e139089bcdb0b0f5",
-    "semantic_hash": "c840126240befd45e139089bcdb0b0f5"
+    "mtime": 1785085907.2318673,
+    "ast_hash": "f7ae0b7f283248c6279e18b8d89fa27a",
+    "semantic_hash": "f7ae0b7f283248c6279e18b8d89fa27a"
   },
   "tinkflow/src/App.tsx": {
     "mtime": 1785079255.101591,

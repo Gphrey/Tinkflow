@@ -451,7 +451,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "enigo",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "enigo"
     },
     {
@@ -2088,9 +2088,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 11,
+      "community": 0,
       "norm_label": "result",
-      "community_name": "Result",
+      "community_name": "lib.rs",
       "id": "result"
     },
     {
@@ -2200,7 +2200,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "option",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "option"
     },
     {
@@ -4026,7 +4026,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "string",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "string"
     },
     {
@@ -4103,7 +4103,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "dictationresult",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_hotkey_dictationresult"
     },
     {
@@ -4191,7 +4191,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "injector.rs",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector"
     },
     {
@@ -4202,7 +4202,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "injectionreport",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_injectionreport"
     },
     {
@@ -4213,7 +4213,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "textinjector",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_textinjector"
     },
     {
@@ -4224,7 +4224,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": ".new()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_textinjector_new"
     },
     {
@@ -4235,7 +4235,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "self",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "self"
     },
     {
@@ -4246,7 +4246,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": ".inject()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_textinjector_inject"
     },
     {
@@ -4257,7 +4257,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": ".inject_with_mode()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_textinjector_inject_with_mode"
     },
     {
@@ -4268,7 +4268,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": ".inject_direct()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_textinjector_inject_direct"
     },
     {
@@ -4279,7 +4279,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": ".report()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_textinjector_report"
     },
     {
@@ -4290,7 +4290,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "copy_text_to_clipboard()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_copy_text_to_clipboard"
     },
     {
@@ -4301,7 +4301,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "inject_via_clipboard()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_inject_via_clipboard"
     },
     {
@@ -4312,7 +4312,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "set_clipboard_text()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_set_clipboard_text"
     },
     {
@@ -4323,7 +4323,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "paste_clipboard()",
-      "community_name": "Result",
+      "community_name": "String",
       "id": "tinkflow_src_tauri_src_injector_paste_clipboard"
     },
     {
@@ -4334,8 +4334,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "package.json",
-      "id": "tinkflow_package",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package"
     },
     {
       "label": "name",
@@ -4345,8 +4345,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "name",
-      "id": "tinkflow_package_name",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_name"
     },
     {
       "label": "private",
@@ -4356,8 +4356,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "private",
-      "id": "tinkflow_package_private",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_private"
     },
     {
       "label": "version",
@@ -4367,8 +4367,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "version",
-      "id": "tinkflow_package_version",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_version"
     },
     {
       "label": "type",
@@ -4378,8 +4378,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "type",
-      "id": "tinkflow_package_type",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_type"
     },
     {
       "label": "scripts",
@@ -4389,8 +4389,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "scripts",
-      "id": "tinkflow_package_scripts",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_scripts"
     },
     {
       "label": "dev",
@@ -4400,8 +4400,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "dev",
-      "id": "tinkflow_package_scripts_dev",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_scripts_dev"
     },
     {
       "label": "build",
@@ -4411,8 +4411,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "build",
-      "id": "tinkflow_package_scripts_build",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_scripts_build"
     },
     {
       "label": "preview",
@@ -4422,8 +4422,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "preview",
-      "id": "tinkflow_package_scripts_preview",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_scripts_preview"
     },
     {
       "label": "tauri",
@@ -4433,8 +4433,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "tauri",
-      "id": "tinkflow_package_scripts_tauri",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_scripts_tauri"
     },
     {
       "label": "dependencies",
@@ -4444,8 +4444,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "dependencies",
-      "id": "tinkflow_package_dependencies",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies"
     },
     {
       "label": "@tauri-apps/api",
@@ -4455,8 +4455,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/api",
-      "id": "tinkflow_package_dependencies_tauri_apps_api",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies_tauri_apps_api"
     },
     {
       "label": "@tauri-apps/api",
@@ -4466,8 +4466,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/api",
-      "id": "tauri_apps_api",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tauri_apps_api"
     },
     {
       "label": "@tauri-apps/plugin-autostart",
@@ -4477,8 +4477,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/plugin-autostart",
-      "id": "tinkflow_package_dependencies_tauri_apps_plugin_autostart",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies_tauri_apps_plugin_autostart"
     },
     {
       "label": "@tauri-apps/plugin-autostart",
@@ -4488,8 +4488,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/plugin-autostart",
-      "id": "tauri_apps_plugin_autostart",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tauri_apps_plugin_autostart"
     },
     {
       "label": "@tauri-apps/plugin-opener",
@@ -4499,8 +4499,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/plugin-opener",
-      "id": "tinkflow_package_dependencies_tauri_apps_plugin_opener",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies_tauri_apps_plugin_opener"
     },
     {
       "label": "@tauri-apps/plugin-opener",
@@ -4510,8 +4510,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/plugin-opener",
-      "id": "tauri_apps_plugin_opener",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tauri_apps_plugin_opener"
     },
     {
       "label": "lucide-react",
@@ -4521,8 +4521,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "lucide-react",
-      "id": "tinkflow_package_dependencies_lucide_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies_lucide_react"
     },
     {
       "label": "lucide-react",
@@ -4532,8 +4532,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "lucide-react",
-      "id": "lucide_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "lucide_react"
     },
     {
       "label": "react",
@@ -4543,8 +4543,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "react",
-      "id": "tinkflow_package_dependencies_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies_react"
     },
     {
       "label": "react",
@@ -4554,8 +4554,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "react",
-      "id": "react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "react"
     },
     {
       "label": "react-dom",
@@ -4565,8 +4565,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "react-dom",
-      "id": "tinkflow_package_dependencies_react_dom",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_dependencies_react_dom"
     },
     {
       "label": "react-dom",
@@ -4576,8 +4576,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "react-dom",
-      "id": "react_dom",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "react_dom"
     },
     {
       "label": "devDependencies",
@@ -4587,8 +4587,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "devdependencies",
-      "id": "tinkflow_package_devdependencies",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies"
     },
     {
       "label": "@tauri-apps/cli",
@@ -4598,8 +4598,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/cli",
-      "id": "tinkflow_package_devdependencies_tauri_apps_cli",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies_tauri_apps_cli"
     },
     {
       "label": "@tauri-apps/cli",
@@ -4609,8 +4609,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@tauri-apps/cli",
-      "id": "tauri_apps_cli",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tauri_apps_cli"
     },
     {
       "label": "@types/react",
@@ -4620,8 +4620,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@types/react",
-      "id": "tinkflow_package_devdependencies_types_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies_types_react"
     },
     {
       "label": "@types/react",
@@ -4631,8 +4631,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@types/react",
-      "id": "types_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "types_react"
     },
     {
       "label": "@types/react-dom",
@@ -4642,8 +4642,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@types/react-dom",
-      "id": "tinkflow_package_devdependencies_types_react_dom",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies_types_react_dom"
     },
     {
       "label": "@types/react-dom",
@@ -4653,8 +4653,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@types/react-dom",
-      "id": "types_react_dom",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "types_react_dom"
     },
     {
       "label": "@vitejs/plugin-react",
@@ -4664,8 +4664,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@vitejs/plugin-react",
-      "id": "tinkflow_package_devdependencies_vitejs_plugin_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies_vitejs_plugin_react"
     },
     {
       "label": "@vitejs/plugin-react",
@@ -4675,8 +4675,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "@vitejs/plugin-react",
-      "id": "vitejs_plugin_react",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "vitejs_plugin_react"
     },
     {
       "label": "typescript",
@@ -4686,8 +4686,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "typescript",
-      "id": "tinkflow_package_devdependencies_typescript",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies_typescript"
     },
     {
       "label": "typescript",
@@ -4697,8 +4697,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "typescript",
-      "id": "typescript",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "typescript"
     },
     {
       "label": "vite",
@@ -4708,8 +4708,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "vite",
-      "id": "tinkflow_package_devdependencies_vite",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "tinkflow_package_devdependencies_vite"
     },
     {
       "label": "vite",
@@ -4719,8 +4719,151 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "vite",
-      "id": "vite",
-      "community_name": "package.json"
+      "community_name": "package.json",
+      "id": "vite"
+    },
+    {
+      "label": "ModelManager.tsx",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "modelmanager.tsx",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_modelmanager"
+    },
+    {
+      "label": "ModelManagerProps",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "modelmanagerprops",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_modelmanager_modelmanagerprops"
+    },
+    {
+      "label": "MODEL_SIZES",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "model_sizes",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_modelmanager_model_sizes"
+    },
+    {
+      "label": "ModelManager()",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "modelmanager()",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_modelmanager_modelmanager"
+    },
+    {
+      "label": "Onboarding.tsx",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "onboarding.tsx",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding"
+    },
+    {
+      "label": "OnboardingProps",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "onboardingprops",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_onboardingprops"
+    },
+    {
+      "label": "AppSettings",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L24",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "appsettings",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_appsettings"
+    },
+    {
+      "label": "STEPS",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L30",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "steps",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_steps"
+    },
+    {
+      "label": "WAVEFORM_BARS",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L36",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "waveform_bars",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_waveform_bars"
+    },
+    {
+      "label": "VoiceProductPreview()",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L38",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "voiceproductpreview()",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_voiceproductpreview"
+    },
+    {
+      "label": "SetupSummary()",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L106",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "setupsummary()",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_setupsummary"
+    },
+    {
+      "label": "ReadyProductPreview()",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L136",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "readyproductpreview()",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_readyproductpreview"
+    },
+    {
+      "label": "Onboarding()",
+      "file_type": "code",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L169",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "onboarding()",
+      "community_name": "Onboarding.tsx",
+      "id": "tinkflow_src_components_onboarding_onboarding"
     },
     {
       "label": "tauri.conf.json",
@@ -5042,147 +5185,37 @@
       "community_name": "bundle"
     },
     {
-      "label": "ModelManager.tsx",
+      "label": "windows",
       "file_type": "code",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L1",
+      "source_file": "tinkflow/src-tauri/tauri.conf.json",
+      "source_location": "L46",
       "_origin": "ast",
-      "community": 12,
-      "norm_label": "modelmanager.tsx",
-      "id": "tinkflow_src_components_modelmanager",
-      "community_name": "Onboarding.tsx"
+      "community": 5,
+      "norm_label": "windows",
+      "id": "tinkflow_src_tauri_tauri_conf_bundle_windows",
+      "community_name": "bundle"
     },
     {
-      "label": "ModelManagerProps",
+      "label": "nsis",
       "file_type": "code",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L6",
+      "source_file": "tinkflow/src-tauri/tauri.conf.json",
+      "source_location": "L47",
       "_origin": "ast",
-      "community": 12,
-      "norm_label": "modelmanagerprops",
-      "id": "tinkflow_src_components_modelmanager_modelmanagerprops",
-      "community_name": "Onboarding.tsx"
+      "community": 5,
+      "norm_label": "nsis",
+      "id": "tinkflow_src_tauri_tauri_conf_windows_nsis",
+      "community_name": "bundle"
     },
     {
-      "label": "MODEL_SIZES",
+      "label": "installerHooks",
       "file_type": "code",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L11",
+      "source_file": "tinkflow/src-tauri/tauri.conf.json",
+      "source_location": "L48",
       "_origin": "ast",
-      "community": 12,
-      "norm_label": "model_sizes",
-      "id": "tinkflow_src_components_modelmanager_model_sizes",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "ModelManager()",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "modelmanager()",
-      "id": "tinkflow_src_components_modelmanager_modelmanager",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "Onboarding.tsx",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "onboarding.tsx",
-      "id": "tinkflow_src_components_onboarding",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "OnboardingProps",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L20",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "onboardingprops",
-      "id": "tinkflow_src_components_onboarding_onboardingprops",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "AppSettings",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "appsettings",
-      "id": "tinkflow_src_components_onboarding_appsettings",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "STEPS",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L30",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "steps",
-      "id": "tinkflow_src_components_onboarding_steps",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "WAVEFORM_BARS",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "waveform_bars",
-      "id": "tinkflow_src_components_onboarding_waveform_bars",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "VoiceProductPreview()",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L38",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "voiceproductpreview()",
-      "id": "tinkflow_src_components_onboarding_voiceproductpreview",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "SetupSummary()",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L106",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "setupsummary()",
-      "id": "tinkflow_src_components_onboarding_setupsummary",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "ReadyProductPreview()",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L136",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "readyproductpreview()",
-      "id": "tinkflow_src_components_onboarding_readyproductpreview",
-      "community_name": "Onboarding.tsx"
-    },
-    {
-      "label": "Onboarding()",
-      "file_type": "code",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L169",
-      "_origin": "ast",
-      "community": 12,
-      "norm_label": "onboarding()",
-      "id": "tinkflow_src_components_onboarding_onboarding",
-      "community_name": "Onboarding.tsx"
+      "community": 5,
+      "norm_label": "installerhooks",
+      "id": "tinkflow_src_tauri_tauri_conf_nsis_installerhooks",
+      "community_name": "bundle"
     }
   ],
   "links": [
@@ -12307,6 +12340,138 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_modelmanager",
+      "target": "tinkflow_src_components_modelmanager_model_sizes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_modelmanager",
+      "target": "tinkflow_src_components_modelmanager_modelmanager"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/ModelManager.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_modelmanager",
+      "target": "tinkflow_src_components_modelmanager_modelmanagerprops"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_modelmanager"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_modelmanager_modelmanager"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_appsettings"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L169",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_onboarding"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_onboardingprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L136",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_readyproductpreview"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L106",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_setupsummary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_steps"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_voiceproductpreview"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src/components/Onboarding.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_components_onboarding",
+      "target": "tinkflow_src_components_onboarding_waveform_bars"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "tinkflow/src-tauri/tauri.conf.json",
       "source_location": "L12",
       "weight": 1.0,
@@ -12525,6 +12690,16 @@
       "target": "tinkflow_src_tauri_tauri_conf_bundle_targets"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tinkflow/src-tauri/tauri.conf.json",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tinkflow_src_tauri_tauri_conf_bundle",
+      "target": "tinkflow_src_tauri_tauri_conf_bundle_windows"
+    },
+    {
       "relation": "extends",
       "confidence": "EXTRACTED",
       "source_file": "tinkflow/src-tauri/tauri.conf.json",
@@ -12591,136 +12766,24 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L11",
+      "source_file": "tinkflow/src-tauri/tauri.conf.json",
+      "source_location": "L47",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "tinkflow_src_components_modelmanager",
-      "target": "tinkflow_src_components_modelmanager_model_sizes"
+      "source": "tinkflow_src_tauri_tauri_conf_bundle_windows",
+      "target": "tinkflow_src_tauri_tauri_conf_windows_nsis"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L18",
+      "source_file": "tinkflow/src-tauri/tauri.conf.json",
+      "source_location": "L48",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "tinkflow_src_components_modelmanager",
-      "target": "tinkflow_src_components_modelmanager_modelmanager"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/ModelManager.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_modelmanager",
-      "target": "tinkflow_src_components_modelmanager_modelmanagerprops"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_modelmanager"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_modelmanager_modelmanager"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_appsettings"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L169",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_onboarding"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_onboardingprops"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L136",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_readyproductpreview"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L106",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_setupsummary"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_steps"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L38",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_voiceproductpreview"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tinkflow/src/components/Onboarding.tsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tinkflow_src_components_onboarding",
-      "target": "tinkflow_src_components_onboarding_waveform_bars"
+      "source": "tinkflow_src_tauri_tauri_conf_windows_nsis",
+      "target": "tinkflow_src_tauri_tauri_conf_nsis_installerhooks"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c95b10b9754e54671476444c703839c43a4550b2"
+  "built_at_commit": "2af508533c9c3c084a5cbb8a2b562fc9308c2768"
 }

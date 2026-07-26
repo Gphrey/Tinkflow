@@ -6,6 +6,7 @@
       "dictationresult",
       "dictationresultstore",
       "downloadcancelflag",
+      "result",
       "state",
       "tinkflow_src_tauri_src_lib",
       "tinkflow_src_tauri_src_lib_activehotkeyid",
@@ -232,13 +233,16 @@
       "tinkflow_src_tauri_tauri_conf_bundle_macos",
       "tinkflow_src_tauri_tauri_conf_bundle_publisher",
       "tinkflow_src_tauri_tauri_conf_bundle_targets",
+      "tinkflow_src_tauri_tauri_conf_bundle_windows",
       "tinkflow_src_tauri_tauri_conf_identifier",
       "tinkflow_src_tauri_tauri_conf_macos_entitlements",
       "tinkflow_src_tauri_tauri_conf_macos_minimumsystemversion",
+      "tinkflow_src_tauri_tauri_conf_nsis_installerhooks",
       "tinkflow_src_tauri_tauri_conf_productname",
       "tinkflow_src_tauri_tauri_conf_schema",
       "tinkflow_src_tauri_tauri_conf_security_csp",
-      "tinkflow_src_tauri_tauri_conf_version"
+      "tinkflow_src_tauri_tauri_conf_version",
+      "tinkflow_src_tauri_tauri_conf_windows_nsis"
     ],
     "6": [
       "tinkflow_src_tauri_src_whisper",
@@ -365,7 +369,6 @@
     "11": [
       "enigo",
       "option",
-      "result",
       "self",
       "string",
       "tinkflow_src_tauri_src_hotkey_dictationresult",
@@ -583,18 +586,18 @@
     ]
   },
   "cohesion": {
-    "0": 0.11100832562442182,
+    "0": 0.11613475177304965,
     "1": 0.08350951374207188,
     "2": 0.08636977058029689,
     "3": 0.05555555555555555,
     "4": 0.07196969696969698,
-    "5": 0.06896551724137931,
+    "5": 0.0625,
     "6": 0.17846153846153845,
     "7": 0.15942028985507245,
     "8": 0.08695652173913043,
     "9": 0.21578947368421053,
     "10": 0.2222222222222222,
-    "11": 0.29411764705882354,
+    "11": 0.27205882352941174,
     "12": 0.16666666666666666,
     "13": 0.16666666666666666,
     "14": 0.35555555555555557,
@@ -686,9 +689,9 @@
       "degree": 10
     },
     {
-      "id": "tinkflow_src_tauri_src_history_transcriptionrecord",
-      "label": "TranscriptionRecord",
-      "degree": 9
+      "id": "tinkflow_src_tauri_tauri_conf_bundle",
+      "label": "bundle",
+      "degree": 10
     }
   ],
   "surprises": [
@@ -718,23 +721,18 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `update_app_settings()` connect `lib.rs` to `Result`?",
-      "why": "High betweenness centrality (0.004) - this node is a cross-community bridge."
-    },
-    {
-      "type": "bridge_node",
-      "question": "Why does `context_with_profile()` connect `.init_on_main_thread` to `Result`?",
+      "question": "Why does `context_with_profile()` connect `.init_on_main_thread` to `String`?",
       "why": "High betweenness centrality (0.003) - this node is a cross-community bridge."
     },
     {
       "type": "isolated_nodes",
       "question": "What connects `$schema`, `identifier`, `description` to the rest of the system?",
-      "why": "96 weakly-connected nodes found - possible documentation gaps or missing edges."
+      "why": "97 weakly-connected nodes found - possible documentation gaps or missing edges."
     },
     {
       "type": "low_cohesion",
       "question": "Should `lib.rs` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.11100832562442182 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.11613475177304965 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
@@ -750,6 +748,11 @@
       "type": "low_cohesion",
       "question": "Should `package.json` be split into smaller, more focused modules?",
       "why": "Cohesion score 0.05555555555555555 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `dictionary.rs` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07196969696969698 - nodes in this community are weakly interconnected."
     }
   ]
 }
