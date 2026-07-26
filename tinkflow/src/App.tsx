@@ -7,6 +7,7 @@ import { Dashboard } from "./components/Dashboard";
 import { SettingsView } from "./components/SettingsView";
 import { Monitor } from "./components/Monitor";
 import { StatusIndicator } from "./components/StatusIndicator";
+import { DictationResultPanel } from "./components/DictationResultPanel";
 import { Sidebar } from "./components/Sidebar";
 
 // Determine synchronously at module load — before React renders a single frame.
@@ -68,6 +69,7 @@ function App() {
   if (IS_OVERLAY) {
     return (
       <main className="overlay-container">
+        <DictationResultPanel />
         <StatusIndicator isOverlay={true} />
       </main>
     );

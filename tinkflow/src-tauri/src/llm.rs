@@ -5,10 +5,10 @@
 //! removal, and punctuation. It sits at the end of the transcription pipeline:
 //!
 //! ```text
-//! Whisper → DeveloperDictionary → OllamaClient::polish_text() → text injection
+//! Whisper -> DeveloperDictionary -> OllamaClient::polish_text() -> text injection
 //! ```
 //!
-//! The prompt strategy is designed to be **model-agnostic** — it uses XML-style
+//! The prompt strategy is designed to be **model-agnostic** - it uses XML-style
 //! delimiters and few-shot examples that work across model families (phi3, llama3,
 //! gemma, mistral, etc.), combined with a hardened output sanitiser that strips
 //! common LLM artifacts regardless of source.
@@ -17,7 +17,7 @@ use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
-// ─── Request / Response Types ────────────────────────────────────────────────
+// Request / Response Types
 
 /// Body for Ollama `/api/generate`.
 #[derive(Serialize)]
@@ -40,13 +40,18 @@ struct TagsResponse {
     models: Vec<ModelInfo>,
 }
 
+#[derive(Deserialize)]
+struct VersionResponse {
+    version: String,
+}
+
 /// A single model entry from `/api/tags`.
 #[derive(Deserialize)]
 struct ModelInfo {
     name: String,
 }
 
-// ─── Client ──────────────────────────────────────────────────────────────────
+// Client
 
 /// HTTP client for the local Ollama API.
 ///
@@ -89,6 +94,22 @@ impl OllamaClient {
             .unwrap_or(false)
     }
 
+    /// Return the local Ollama server version when available.
+    pub fn version(&self) -> Result<String, String> {
+        let resp = self
+            .client
+            .get(format!("{}/api/version", self.base_url))
+            .timeout(Duration::from_secs(3))
+            .send()
+            .map_err(|e| format!("Failed to connect to Ollama: {}", e))?;
+
+        let version: VersionResponse = resp
+            .json()
+            .map_err(|e| format!("Failed to parse Ollama version response: {}", e))?;
+
+        Ok(version.version)
+    }
+
     /// List all locally available model names from Ollama.
     pub fn list_models(&self) -> Result<Vec<String>, String> {
         let resp = self
@@ -113,9 +134,9 @@ impl OllamaClient {
     ///
     /// # Arguments
     ///
-    /// * `raw_text` — the dictionary-corrected transcription
-    /// * `context` — detected window context (`"code"`, `"chat"`, `"email"`, etc.)
-    /// * `model_name` — the Ollama model to use (e.g. `"phi3:mini"`)
+    /// * `raw_text`  the dictionary-corrected transcription
+    /// * `context`  detected window context (`"code"`, `"chat"`, `"email"`, etc.)
+    /// * `model_name`  the Ollama model to use (e.g. `"phi3:mini"`)
     pub fn polish_text(&self, raw_text: &str, context: &str, model_name: &str) -> String {
         if model_name.is_empty() {
             return raw_text.to_string();
@@ -207,7 +228,7 @@ NOW: Clean up the following input text. Fix any misheard words using context.
 
     /// Pull (download) a model via Ollama's streaming `/api/pull` endpoint.
     ///
-    /// Emits `"ollama-download-progress"` events (0.0–100.0) to the frontend.
+    /// Emits `"ollama-download-progress"` events (0.0100.0) to the frontend.
     ///
     /// # Errors
     ///
@@ -291,43 +312,59 @@ NOW: Clean up the following input text. Fix any misheard words using context.
     }
 }
 
-// ─── Prompt Building ─────────────────────────────────────────────────────────
+// Prompt Building
 
 /// Build a context-aware system prompt for the LLM.
 ///
-/// Kept intentionally **short and directive** — small models like phi3:mini
+/// Kept intentionally **short and directive**  small models like phi3:mini
 /// parrot long instructions back verbatim. The few-shot examples in
 /// [`OllamaClient::polish_text`] do the real teaching.
-fn build_system_prompt(context: &str) -> String {
-    let context_hint = match context {
-        "code" => "Preserve technical terms, function names, and code symbols exactly.",
-        "comment" => "Write clean professional English suitable for code comments.",
-        "chat" => "Keep the tone casual and concise.",
-        "email" => "Use professional tone and grammar.",
-        "terminal" => "Keep output concise and command-like.",
+pub fn build_system_prompt(context: &str) -> String {
+    let (base_context, profile_hint) = context
+        .split_once("|profile:")
+        .map(|(base, hint)| (base, hint))
+        .unwrap_or((context, ""));
+
+    let context_hint = match base_context {
+        c if c.starts_with("code") => {
+            "Preserve technical terms, function names, and code symbols exactly."
+        }
+        c if c.starts_with("comment") => {
+            "Write clean professional English suitable for code comments."
+        }
+        c if c.starts_with("chat") => "Keep the tone casual and concise.",
+        c if c.starts_with("email") => "Use professional tone and grammar.",
+        c if c.starts_with("terminal") => "Keep output concise and command-like.",
         _ => "Use correct grammar and natural phrasing.",
+    };
+
+    let profile_hint = if profile_hint.is_empty() {
+        String::new()
+    } else {
+        format!(" Context profile: {}.", profile_hint)
     };
 
     format!(
         "You are a transcription corrector. The input is speech-to-text output that may contain: \
-         (1) filler words (uh, um, like, so, you know) — remove them. \
-         (2) Misheard or wrong words from speech recognition — fix them using surrounding context \
+         (1) filler words (uh, um, like, so, you know) - remove them. \
+         (2) Misheard or wrong words from speech recognition - fix them using surrounding context \
          (e.g. \"think\" should be \"thing\", \"their\" should be \"there\"). \
-         (3) Grammar and punctuation errors — correct them. \
-         (4) Awkward phrasing from spoken language — make it read naturally. \
+         (3) Grammar and punctuation errors - correct them. \
+         (4) Awkward phrasing from spoken language - make it read naturally. \
          Preserve all code symbols (@, #, =>, ===) and technical terms exactly as they appear. \
          Do NOT replace symbols with English words. Do NOT change the meaning or add new ideas. \
          Output ONLY the cleaned text inside <output></output> tags. \
-         No explanations. No commentary. {}",
-        context_hint
+         No explanations. No commentary. {}{}",
+        context_hint,
+        profile_hint
     )
 }
 
-// ─── Output Sanitisation ─────────────────────────────────────────────────────
+// Output Sanitisation
 
 /// Sanitise raw LLM output into clean, usable text.
 ///
-/// This function is designed to be **model-agnostic** — it handles quirks from
+/// This function is designed to be **model-agnostic**  it handles quirks from
 /// small models (echoed prefixes, commentary) and large models (markdown fences,
 /// verbose preambles) alike.
 ///
@@ -342,7 +379,7 @@ fn sanitise_llm_output(raw: &str, original: &str) -> String {
         if let Some(end) = text[content_start..].find("</output>") {
             text = text[content_start..content_start + end].trim().to_string();
         } else {
-            // Opening tag but no closing tag — take everything after it
+            // Opening tag but no closing tag  take everything after it
             text = text[content_start..].trim().to_string();
         }
     }
@@ -383,12 +420,12 @@ fn sanitise_llm_output(raw: &str, original: &str) -> String {
         }
     }
 
-    // 6. Length guard — reject hallucinated or over-summarised output
+    // 6. Length guard - reject hallucinated or over-summarised output
     if !original.is_empty() {
         let ratio = text.len() as f64 / original.len() as f64;
         if ratio > 3.0 || ratio < 0.3 {
             eprintln!(
-                "LLM output length ratio {:.1}x — discarding (original: {} chars, output: {} chars)",
+                "LLM output length ratio {:.1}x - discarding (original: {} chars, output: {} chars)",
                 ratio,
                 original.len(),
                 text.len()
@@ -400,13 +437,13 @@ fn sanitise_llm_output(raw: &str, original: &str) -> String {
     text
 }
 
-// ─── Tests ───────────────────────────────────────────────────────────────────
+// Tests
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    // ── sanitise_llm_output ──────────────────────────────────────────────
+    // sanitise_llm_output
 
     #[test]
     fn sanitise_clean_output() {
@@ -483,11 +520,11 @@ mod tests {
 
     #[test]
     fn sanitise_empty_llm_output_falls_back() {
-        // Empty output triggers the length guard → falls back to original
+        // Empty output triggers the length guard  falls back to original
         assert_eq!(sanitise_llm_output("", "hello world"), "hello world");
     }
 
-    // ── build_system_prompt ──────────────────────────────────────────────
+    // build_system_prompt
 
     #[test]
     fn system_prompt_contains_context_hint() {
@@ -507,7 +544,7 @@ mod tests {
         assert!(prompt.contains("correct grammar"));
     }
 
-    // ── OllamaClient construction ────────────────────────────────────────
+    // OllamaClient construction
 
     #[test]
     fn default_matches_new() {

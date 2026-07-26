@@ -11,6 +11,27 @@ interface AppSettings {
     launch_at_startup: boolean;
     onboarding_completed: boolean;
     dictation_hotkey: string;
+    injection_mode: string;
+    transcription_quality: string;
+    dictation_enabled: boolean;
+    context_profiles: ContextProfile[];
+}
+
+interface ContextProfile {
+    context: string;
+    enabled: boolean;
+    tone: string;
+    preserve_symbols: boolean;
+    remove_fillers: boolean;
+    punctuation: boolean;
+}
+
+interface CorrectionEntry {
+    id: number;
+    spoken: string;
+    replacement: string;
+    enabled: boolean;
+    created_at_ms: number;
 }
 
 const WHISPER_MODELS = [
@@ -28,7 +49,14 @@ export function SettingsView() {
         launch_at_startup: false,
         onboarding_completed: false,
         dictation_hotkey: 'Ctrl+Space',
+        injection_mode: 'auto',
+        transcription_quality: 'balanced',
+        dictation_enabled: true,
+        context_profiles: [],
     });
+    const [corrections, setCorrections] = useState<CorrectionEntry[]>([]);
+    const [newSpoken, setNewSpoken] = useState('');
+    const [newReplacement, setNewReplacement] = useState('');
     const [audioDevices, setAudioDevices] = useState<string[]>(['default']);
     const [installedWhisperModels, setInstalledWhisperModels] = useState<string[]>([]);
     const [pullingWhisper, setPullingWhisper] = useState<boolean>(false);
@@ -55,6 +83,7 @@ export function SettingsView() {
             setAudioDevices(devices);
             const whisperList = await invoke<string[]>('list_installed_whisper_models');
             setInstalledWhisperModels(whisperList);
+            setCorrections(await invoke<CorrectionEntry[]>('list_corrections'));
 
             // Sync autostart toggle from the OS-level plugin (source of truth)
             try {
@@ -68,7 +97,7 @@ export function SettingsView() {
         }
     };
 
-    const updateSetting = async (key: keyof AppSettings, value: string | boolean) => {
+    const updateSetting = async (key: keyof AppSettings, value: string | boolean | ContextProfile[]) => {
         const newSettings = { ...settings, [key]: value };
         setSettings(newSettings);
         try {
@@ -94,12 +123,39 @@ export function SettingsView() {
         }
     };
 
+    const addCorrection = async () => {
+        try {
+            await invoke('add_correction', { spoken: newSpoken, replacement: newReplacement });
+            setNewSpoken('');
+            setNewReplacement('');
+            setCorrections(await invoke<CorrectionEntry[]>('list_corrections'));
+        } catch (e) {
+            console.error('Failed to add correction:', e);
+        }
+    };
+
+    const removeCorrection = async (id: number) => {
+        await invoke('remove_correction', { id });
+        setCorrections(await invoke<CorrectionEntry[]>('list_corrections'));
+    };
+
+    const toggleCorrection = async (entry: CorrectionEntry) => {
+        await invoke('set_correction_enabled', { id: entry.id, enabled: !entry.enabled });
+        setCorrections(await invoke<CorrectionEntry[]>('list_corrections'));
+    };
+
+    const updateProfile = (index: number, patch: Partial<ContextProfile>) => {
+        const context_profiles = settings.context_profiles.map((profile, i) =>
+            i === index ? { ...profile, ...patch } : profile
+        );
+        updateSetting('context_profiles', context_profiles);
+    };
     const refreshAudioDevices = async () => {
         try {
             const devices = await invoke<string[]>('get_audio_devices');
             setAudioDevices(devices);
             if (settings.audio_device_name !== 'default' && !devices.includes(settings.audio_device_name)) {
-                console.warn(`[Audio] Previously selected device '${settings.audio_device_name}' no longer available — resetting to default`);
+                console.warn(`[Audio] Previously selected device '${settings.audio_device_name}' no longer available - resetting to default`);
                 updateSetting('audio_device_name', 'default');
             }
         } catch (e) {
@@ -162,6 +218,58 @@ export function SettingsView() {
                 <div className="settings-card">
                     <div className="setting-row">
                         <div className="setting-info">
+                            <span className="setting-label">Dictation Enabled</span>
+                            <span className="setting-desc">Turn global hotkey capture on or off without quitting Tinkflow</span>
+                        </div>
+                        <label className="toggle-switch">
+                            <input
+                                type="checkbox"
+                                checked={settings.dictation_enabled}
+                                onChange={(e) => updateSetting('dictation_enabled', e.target.checked)}
+                            />
+                            <span className="toggle-slider" />
+                        </label>
+                    </div>
+                </div>
+
+                <div className="settings-card">
+                    <div className="setting-row">
+                        <div className="setting-info">
+                            <span className="setting-label">Text Insertion</span>
+                            <span className="setting-desc">Choose direct typing, clipboard paste, or automatic fallback</span>
+                        </div>
+                        <select
+                            className="settings-select"
+                            value={settings.injection_mode || 'auto'}
+                            onChange={(e) => updateSetting('injection_mode', e.target.value)}
+                        >
+                            <option value="auto">Auto fallback</option>
+                            <option value="direct">Direct typing</option>
+                            <option value="clipboard">Clipboard paste</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div className="settings-card">
+                    <div className="setting-row">
+                        <div className="setting-info">
+                            <span className="setting-label">Recognition Quality</span>
+                            <span className="setting-desc">Accurate checks more candidates for technical terms; balanced stays faster.</span>
+                        </div>
+                        <select
+                            className="settings-select"
+                            value={settings.transcription_quality || 'balanced'}
+                            onChange={(e) => updateSetting('transcription_quality', e.target.value)}
+                        >
+                            <option value="balanced">Balanced</option>
+                            <option value="accurate">Accurate</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div className="settings-card">
+                    <div className="setting-row">
+                        <div className="setting-info">
                             <span className="setting-label">Audio Input</span>
                             <span className="setting-desc">Select which microphone to record from</span>
                         </div>
@@ -191,7 +299,7 @@ export function SettingsView() {
                             <span className="setting-label">Whisper Model</span>
                             <span className="setting-desc">Smaller = faster, larger = more accurate</span>
                         </div>
-                        <div className="setting-control-group">
+                        <div className="setting-control-group correction-controls">
                             <select
                                 className="settings-select"
                                 value={settings.whisper_model}
@@ -216,7 +324,7 @@ export function SettingsView() {
                             >
                                 {WHISPER_MODELS.map(w => (
                                     <option key={w.name} value={w.name}>
-                                        {w.label} {installedWhisperModels.includes(w.name) ? '✓' : '⬇'}
+                                        {w.label} {installedWhisperModels.includes(w.name) ? '(installed)' : '(download)'}
                                     </option>
                                 ))}
                             </select>
@@ -231,6 +339,91 @@ export function SettingsView() {
                 </div>
             </div>
 
+            {/* Personal Corrections Section */}
+            <div className="settings-section">
+                <h3 className="settings-section-title">Personal Corrections</h3>
+                <div className="settings-card corrections-card">
+                    <div className="setting-row">
+                        <div className="setting-info">
+                            <span className="setting-label">Add Correction</span>
+                            <span className="setting-desc">Teach Tinkflow your project names, APIs, and repeated speech fixes</span>
+                        </div>
+                        <div className="setting-control-group">
+                            <input className="settings-select" value={newSpoken} onChange={(e) => setNewSpoken(e.target.value)} placeholder="spoken phrase" />
+                            <input className="settings-select" value={newReplacement} onChange={(e) => setNewReplacement(e.target.value)} placeholder="replacement" />
+                            <button className="secondary-btn" onClick={addCorrection}>Add</button>
+                        </div>
+                    </div>
+                    {corrections.map(entry => (
+                        <div className="setting-row" key={entry.id}>
+                            <div className="setting-info">
+                                <span className="setting-label">{entry.spoken} {'->'} {entry.replacement}</span>
+                                <span className="setting-desc">{entry.enabled ? 'Enabled' : 'Disabled'}</span>
+                            </div>
+                            <div className="setting-control-group">
+                                <button className="secondary-btn" onClick={() => toggleCorrection(entry)}>{entry.enabled ? 'Disable' : 'Enable'}</button>
+                                <button className="secondary-btn" onClick={() => removeCorrection(entry.id)}>Remove</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Context Profiles Section */}
+            <div className="settings-section">
+                <h3 className="settings-section-title">Context Profiles</h3>
+                {settings.context_profiles.map((profile, index) => (
+                    <div className="settings-card profile-card" key={profile.context}>
+                        <div className="setting-row">
+                            <div className="setting-info">
+                                <span className="setting-label">{profile.context}</span>
+                                <span className="setting-desc">Controls how local LLM polishing behaves in this context</span>
+                            </div>
+                            <label className="toggle-switch">
+                                <input type="checkbox" checked={profile.enabled} onChange={(e) => updateProfile(index, { enabled: e.target.checked })} />
+                                <span className="toggle-slider" />
+                            </label>
+                        </div>
+                        <div className="setting-row">
+                            <div className="setting-info">
+                                <span className="setting-label">Tone</span>
+                                <span className="setting-desc">Short instruction added to the polishing prompt</span>
+                            </div>
+                            <input className="settings-select" value={profile.tone} onChange={(e) => updateProfile(index, { tone: e.target.value })} />
+                        </div>
+                        <div className="setting-row">
+                            <div className="setting-info">
+                                <span className="setting-label">Preserve Symbols</span>
+                                <span className="setting-desc">Protect code symbols and technical notation</span>
+                            </div>
+                            <label className="toggle-switch">
+                                <input type="checkbox" checked={profile.preserve_symbols} onChange={(e) => updateProfile(index, { preserve_symbols: e.target.checked })} />
+                                <span className="toggle-slider" />
+                            </label>
+                        </div>                        <div className="setting-row">
+                            <div className="setting-info">
+                                <span className="setting-label">Remove Fillers</span>
+                                <span className="setting-desc">Ask the polishing model to remove spoken filler words</span>
+                            </div>
+                            <label className="toggle-switch">
+                                <input type="checkbox" checked={profile.remove_fillers} onChange={(e) => updateProfile(index, { remove_fillers: e.target.checked })} />
+                                <span className="toggle-slider" />
+                            </label>
+                        </div>
+
+                        <div className="setting-row">
+                            <div className="setting-info">
+                                <span className="setting-label">Punctuation</span>
+                                <span className="setting-desc">Ask the polishing model to add natural punctuation</span>
+                            </div>
+                            <label className="toggle-switch">
+                                <input type="checkbox" checked={profile.punctuation} onChange={(e) => updateProfile(index, { punctuation: e.target.checked })} />
+                                <span className="toggle-slider" />
+                            </label>
+                        </div>
+                    </div>
+                ))}
+            </div>
             {/* About Section */}
             <div className="settings-section">
                 <h3 className="settings-section-title">About</h3>
@@ -239,10 +432,10 @@ export function SettingsView() {
                     <div className="setting-row">
                         <div className="setting-info">
                             <span className="setting-label">Tinkflow</span>
-                            <span className="setting-desc">Voice-to-text for developers — local, private, fast</span>
+                            <span className="setting-desc">Voice-to-text for developers - local, private, fast</span>
                         </div>
                         <div className="setting-value">
-                            <span className="setting-version-badge">v0.2.0</span>
+                            <span className="setting-version-badge">v1.5.0</span>
                         </div>
                     </div>
                 </div>
@@ -250,4 +443,3 @@ export function SettingsView() {
         </div>
     );
 }
-

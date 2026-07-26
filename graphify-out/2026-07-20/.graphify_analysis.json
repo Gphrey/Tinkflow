@@ -1,0 +1,661 @@
+{
+  "communities": {
+    "0": [
+      "app",
+      "appsettings",
+      "atomicu32",
+      "correctionmanager",
+      "historymanager",
+      "recordingstatestore",
+      "tinkflow_src_tauri_src_lib",
+      "tinkflow_src_tauri_src_lib_activehotkeyid",
+      "tinkflow_src_tauri_src_lib_add_correction",
+      "tinkflow_src_tauri_src_lib_cancel_download",
+      "tinkflow_src_tauri_src_lib_check_ollama_status",
+      "tinkflow_src_tauri_src_lib_clear_transcription_history",
+      "tinkflow_src_tauri_src_lib_copy_last_transcription",
+      "tinkflow_src_tauri_src_lib_get_app_settings",
+      "tinkflow_src_tauri_src_lib_get_audio_devices",
+      "tinkflow_src_tauri_src_lib_get_model_health",
+      "tinkflow_src_tauri_src_lib_get_recording_state",
+      "tinkflow_src_tauri_src_lib_greet",
+      "tinkflow_src_tauri_src_lib_list_corrections",
+      "tinkflow_src_tauri_src_lib_list_ollama_models",
+      "tinkflow_src_tauri_src_lib_list_transcription_history",
+      "tinkflow_src_tauri_src_lib_modelhealth",
+      "tinkflow_src_tauri_src_lib_pull_ollama_model",
+      "tinkflow_src_tauri_src_lib_remove_correction",
+      "tinkflow_src_tauri_src_lib_rs_apphandle",
+      "tinkflow_src_tauri_src_lib_rs_arc",
+      "tinkflow_src_tauri_src_lib_rs_downloadcancelflag",
+      "tinkflow_src_tauri_src_lib_rs_mutex",
+      "tinkflow_src_tauri_src_lib_rs_option",
+      "tinkflow_src_tauri_src_lib_rs_result",
+      "tinkflow_src_tauri_src_lib_rs_settingsmanager",
+      "tinkflow_src_tauri_src_lib_rs_state",
+      "tinkflow_src_tauri_src_lib_rs_string",
+      "tinkflow_src_tauri_src_lib_rs_vec",
+      "tinkflow_src_tauri_src_lib_run",
+      "tinkflow_src_tauri_src_lib_set_correction_enabled",
+      "tinkflow_src_tauri_src_lib_setup_tray",
+      "tinkflow_src_tauri_src_lib_update_app_settings"
+    ],
+    "1": [
+      "atomicbool",
+      "client",
+      "tinkflow_src_tauri_src_llm",
+      "tinkflow_src_tauri_src_llm_build_system_prompt",
+      "tinkflow_src_tauri_src_llm_default_matches_new",
+      "tinkflow_src_tauri_src_llm_generaterequest",
+      "tinkflow_src_tauri_src_llm_generateresponse",
+      "tinkflow_src_tauri_src_llm_modelinfo",
+      "tinkflow_src_tauri_src_llm_ollamaclient",
+      "tinkflow_src_tauri_src_llm_ollamaclient_check_health",
+      "tinkflow_src_tauri_src_llm_ollamaclient_default",
+      "tinkflow_src_tauri_src_llm_ollamaclient_list_models",
+      "tinkflow_src_tauri_src_llm_ollamaclient_new",
+      "tinkflow_src_tauri_src_llm_ollamaclient_polish_text",
+      "tinkflow_src_tauri_src_llm_ollamaclient_pull_model",
+      "tinkflow_src_tauri_src_llm_ollamaclient_version",
+      "tinkflow_src_tauri_src_llm_rs_apphandle",
+      "tinkflow_src_tauri_src_llm_rs_arc",
+      "tinkflow_src_tauri_src_llm_rs_result",
+      "tinkflow_src_tauri_src_llm_rs_self",
+      "tinkflow_src_tauri_src_llm_rs_string",
+      "tinkflow_src_tauri_src_llm_rs_vec",
+      "tinkflow_src_tauri_src_llm_sanitise_clean_output",
+      "tinkflow_src_tauri_src_llm_sanitise_empty_llm_output_falls_back",
+      "tinkflow_src_tauri_src_llm_sanitise_extracts_from_output_tags",
+      "tinkflow_src_tauri_src_llm_sanitise_extracts_unclosed_output_tag",
+      "tinkflow_src_tauri_src_llm_sanitise_llm_output",
+      "tinkflow_src_tauri_src_llm_sanitise_rejects_hallucination",
+      "tinkflow_src_tauri_src_llm_sanitise_rejects_over_summarisation",
+      "tinkflow_src_tauri_src_llm_sanitise_strips_code_fence",
+      "tinkflow_src_tauri_src_llm_sanitise_strips_commentary",
+      "tinkflow_src_tauri_src_llm_sanitise_strips_echoed_prefix",
+      "tinkflow_src_tauri_src_llm_sanitise_strips_quotes",
+      "tinkflow_src_tauri_src_llm_system_prompt_contains_context_hint",
+      "tinkflow_src_tauri_src_llm_system_prompt_fallback_context",
+      "tinkflow_src_tauri_src_llm_system_prompt_uses_xml_instruction",
+      "tinkflow_src_tauri_src_llm_tagsresponse",
+      "tinkflow_src_tauri_src_llm_versionresponse"
+    ],
+    "2": [
+      "react",
+      "react_dom",
+      "tauri_apps_api",
+      "tauri_apps_cli",
+      "tauri_apps_plugin_autostart",
+      "tauri_apps_plugin_opener",
+      "tinkflow_package",
+      "tinkflow_package_dependencies",
+      "tinkflow_package_dependencies_react",
+      "tinkflow_package_dependencies_react_dom",
+      "tinkflow_package_dependencies_tauri_apps_api",
+      "tinkflow_package_dependencies_tauri_apps_plugin_autostart",
+      "tinkflow_package_dependencies_tauri_apps_plugin_opener",
+      "tinkflow_package_devdependencies",
+      "tinkflow_package_devdependencies_tauri_apps_cli",
+      "tinkflow_package_devdependencies_types_react",
+      "tinkflow_package_devdependencies_types_react_dom",
+      "tinkflow_package_devdependencies_typescript",
+      "tinkflow_package_devdependencies_vite",
+      "tinkflow_package_devdependencies_vitejs_plugin_react",
+      "tinkflow_package_name",
+      "tinkflow_package_private",
+      "tinkflow_package_scripts",
+      "tinkflow_package_scripts_build",
+      "tinkflow_package_scripts_dev",
+      "tinkflow_package_scripts_preview",
+      "tinkflow_package_scripts_tauri",
+      "tinkflow_package_type",
+      "tinkflow_package_version",
+      "types_react",
+      "types_react_dom",
+      "typescript",
+      "vite",
+      "vitejs_plugin_react"
+    ],
+    "3": [
+      "ahocorasick",
+      "default",
+      "tinkflow_src_tauri_src_dictionary",
+      "tinkflow_src_tauri_src_dictionary_annotation_deprecated",
+      "tinkflow_src_tauri_src_dictionary_annotation_param",
+      "tinkflow_src_tauri_src_dictionary_annotation_returns",
+      "tinkflow_src_tauri_src_dictionary_at_dot_standalone",
+      "tinkflow_src_tauri_src_dictionary_case_insensitive_arrow_preserved",
+      "tinkflow_src_tauri_src_dictionary_case_insensitive_hashtag",
+      "tinkflow_src_tauri_src_dictionary_default_is_same_as_new",
+      "tinkflow_src_tauri_src_dictionary_developerdictionary",
+      "tinkflow_src_tauri_src_dictionary_developerdictionary_apply",
+      "tinkflow_src_tauri_src_dictionary_developerdictionary_default",
+      "tinkflow_src_tauri_src_dictionary_developerdictionary_new",
+      "tinkflow_src_tauri_src_dictionary_dict",
+      "tinkflow_src_tauri_src_dictionary_empty_input",
+      "tinkflow_src_tauri_src_dictionary_mistranscription_api",
+      "tinkflow_src_tauri_src_dictionary_mistranscription_json",
+      "tinkflow_src_tauri_src_dictionary_mistranscription_json_lowercase",
+      "tinkflow_src_tauri_src_dictionary_mistranscription_node_js",
+      "tinkflow_src_tauri_src_dictionary_mistranscription_sql_sequel",
+      "tinkflow_src_tauri_src_dictionary_mistranscription_typescript",
+      "tinkflow_src_tauri_src_dictionary_multiple_replacements_in_one_string",
+      "tinkflow_src_tauri_src_dictionary_no_match_passthrough",
+      "tinkflow_src_tauri_src_dictionary_operators_preserved_arrow_function",
+      "tinkflow_src_tauri_src_dictionary_operators_preserved_equals",
+      "tinkflow_src_tauri_src_dictionary_rs_self",
+      "tinkflow_src_tauri_src_dictionary_rs_string",
+      "tinkflow_src_tauri_src_dictionary_rs_vec",
+      "tinkflow_src_tauri_src_dictionary_symbol_at_dot_path",
+      "tinkflow_src_tauri_src_dictionary_symbol_at_sign",
+      "tinkflow_src_tauri_src_dictionary_symbol_at_slash",
+      "tinkflow_src_tauri_src_dictionary_symbol_hashtag"
+    ],
+    "4": [
+      "tinkflow_src_app",
+      "tinkflow_src_app_app",
+      "tinkflow_src_app_appsettings",
+      "tinkflow_src_components_dashboard",
+      "tinkflow_src_components_dashboard_appsettings",
+      "tinkflow_src_components_dashboard_dashboard",
+      "tinkflow_src_components_dashboard_modelhealth",
+      "tinkflow_src_components_dashboard_recommended_models",
+      "tinkflow_src_components_dashboard_transcriptionrecord",
+      "tinkflow_src_components_modelmanager",
+      "tinkflow_src_components_modelmanager_modelmanager",
+      "tinkflow_src_components_monitor",
+      "tinkflow_src_components_monitor_eventlogentry",
+      "tinkflow_src_components_monitor_monitor",
+      "tinkflow_src_components_onboarding",
+      "tinkflow_src_components_onboarding_onboarding",
+      "tinkflow_src_components_settingsview",
+      "tinkflow_src_components_settingsview_appsettings",
+      "tinkflow_src_components_settingsview_contextprofile",
+      "tinkflow_src_components_settingsview_correctionentry",
+      "tinkflow_src_components_settingsview_settingsview",
+      "tinkflow_src_components_settingsview_whisper_models",
+      "tinkflow_src_components_sidebar",
+      "tinkflow_src_components_sidebar_sidebar",
+      "tinkflow_src_components_sidebar_sidebarprops",
+      "tinkflow_src_components_statusindicator",
+      "tinkflow_src_components_statusindicator_statusindicator",
+      "tinkflow_src_components_statusindicator_statusindicatorprops",
+      "tinkflow_src_hooks_userecording",
+      "tinkflow_src_hooks_userecording_recordingstate",
+      "tinkflow_src_hooks_userecording_userecording",
+      "tinkflow_src_hooks_userecording_valid_states",
+      "tinkflow_src_main"
+    ],
+    "5": [
+      "ref_icons_128x128_2x_png",
+      "ref_icons_128x128_png",
+      "ref_icons_32x32_png",
+      "ref_icons_icon_ico",
+      "tinkflow_src_tauri_tauri_conf",
+      "tinkflow_src_tauri_tauri_conf_app",
+      "tinkflow_src_tauri_tauri_conf_app_security",
+      "tinkflow_src_tauri_tauri_conf_app_windows",
+      "tinkflow_src_tauri_tauri_conf_build",
+      "tinkflow_src_tauri_tauri_conf_build_beforebuildcommand",
+      "tinkflow_src_tauri_tauri_conf_build_beforedevcommand",
+      "tinkflow_src_tauri_tauri_conf_build_devurl",
+      "tinkflow_src_tauri_tauri_conf_build_frontenddist",
+      "tinkflow_src_tauri_tauri_conf_bundle",
+      "tinkflow_src_tauri_tauri_conf_bundle_active",
+      "tinkflow_src_tauri_tauri_conf_bundle_copyright",
+      "tinkflow_src_tauri_tauri_conf_bundle_icon",
+      "tinkflow_src_tauri_tauri_conf_bundle_license",
+      "tinkflow_src_tauri_tauri_conf_bundle_licensefile",
+      "tinkflow_src_tauri_tauri_conf_bundle_macos",
+      "tinkflow_src_tauri_tauri_conf_bundle_publisher",
+      "tinkflow_src_tauri_tauri_conf_bundle_targets",
+      "tinkflow_src_tauri_tauri_conf_identifier",
+      "tinkflow_src_tauri_tauri_conf_macos_entitlements",
+      "tinkflow_src_tauri_tauri_conf_macos_minimumsystemversion",
+      "tinkflow_src_tauri_tauri_conf_productname",
+      "tinkflow_src_tauri_tauri_conf_schema",
+      "tinkflow_src_tauri_tauri_conf_security_csp",
+      "tinkflow_src_tauri_tauri_conf_version"
+    ],
+    "6": [
+      "downloadcancelflag",
+      "option",
+      "pathbuf",
+      "state",
+      "tinkflow_src_tauri_src_whisper",
+      "tinkflow_src_tauri_src_whisper_canonical_model_name",
+      "tinkflow_src_tauri_src_whisper_check_whisper_model",
+      "tinkflow_src_tauri_src_whisper_download_whisper_model",
+      "tinkflow_src_tauri_src_whisper_get_model_path",
+      "tinkflow_src_tauri_src_whisper_list_installed_whisper_models",
+      "tinkflow_src_tauri_src_whisper_load_whisper_model",
+      "tinkflow_src_tauri_src_whisper_model_url",
+      "tinkflow_src_tauri_src_whisper_rs_apphandle",
+      "tinkflow_src_tauri_src_whisper_rs_arc",
+      "tinkflow_src_tauri_src_whisper_rs_result",
+      "tinkflow_src_tauri_src_whisper_rs_self",
+      "tinkflow_src_tauri_src_whisper_rs_string",
+      "tinkflow_src_tauri_src_whisper_rs_vec",
+      "tinkflow_src_tauri_src_whisper_whispertranscriber",
+      "tinkflow_src_tauri_src_whisper_whispertranscriber_is_model_loaded",
+      "tinkflow_src_tauri_src_whisper_whispertranscriber_load_model",
+      "tinkflow_src_tauri_src_whisper_whispertranscriber_new",
+      "tinkflow_src_tauri_src_whisper_whispertranscriber_set_model_path",
+      "tinkflow_src_tauri_src_whisper_whispertranscriber_transcribe",
+      "whispercontext"
+    ],
+    "7": [
+      "arc",
+      "box",
+      "mutex",
+      "result",
+      "send",
+      "sender",
+      "settingsmanager",
+      "stream",
+      "sync",
+      "tinkflow_src_tauri_src_audio",
+      "tinkflow_src_tauri_src_audio_audiocapturer",
+      "tinkflow_src_tauri_src_audio_audiocapturer_new",
+      "tinkflow_src_tauri_src_audio_audiocapturer_start_recording",
+      "tinkflow_src_tauri_src_audio_audiocapturer_stop_recording",
+      "tinkflow_src_tauri_src_audio_list_input_devices",
+      "tinkflow_src_tauri_src_audio_rmsvad",
+      "tinkflow_src_tauri_src_audio_rmsvad_is_active",
+      "tinkflow_src_tauri_src_audio_rmsvad_new",
+      "tinkflow_src_tauri_src_audio_rs_option",
+      "tinkflow_src_tauri_src_audio_rs_self",
+      "tinkflow_src_tauri_src_audio_rs_string",
+      "tinkflow_src_tauri_src_audio_rs_vec",
+      "tinkflow_src_tauri_src_audio_voiceactivitydetector"
+    ],
+    "8": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_es2020",
+      "ref_src",
+      "tinkflow_tsconfig",
+      "tinkflow_tsconfig_compileroptions",
+      "tinkflow_tsconfig_compileroptions_allowimportingtsextensions",
+      "tinkflow_tsconfig_compileroptions_isolatedmodules",
+      "tinkflow_tsconfig_compileroptions_jsx",
+      "tinkflow_tsconfig_compileroptions_lib",
+      "tinkflow_tsconfig_compileroptions_module",
+      "tinkflow_tsconfig_compileroptions_moduleresolution",
+      "tinkflow_tsconfig_compileroptions_noemit",
+      "tinkflow_tsconfig_compileroptions_nofallthroughcasesinswitch",
+      "tinkflow_tsconfig_compileroptions_nounusedlocals",
+      "tinkflow_tsconfig_compileroptions_nounusedparameters",
+      "tinkflow_tsconfig_compileroptions_resolvejsonmodule",
+      "tinkflow_tsconfig_compileroptions_skiplibcheck",
+      "tinkflow_tsconfig_compileroptions_strict",
+      "tinkflow_tsconfig_compileroptions_target",
+      "tinkflow_tsconfig_compileroptions_usedefineforclassfields",
+      "tinkflow_tsconfig_include",
+      "tinkflow_tsconfig_references"
+    ],
+    "9": [
+      "tinkflow_src_tauri_src_settings",
+      "tinkflow_src_tauri_src_settings_appsettings",
+      "tinkflow_src_tauri_src_settings_appsettings_context_profile",
+      "tinkflow_src_tauri_src_settings_appsettings_default",
+      "tinkflow_src_tauri_src_settings_contextprofile",
+      "tinkflow_src_tauri_src_settings_default_context_profiles",
+      "tinkflow_src_tauri_src_settings_default_dictation_enabled",
+      "tinkflow_src_tauri_src_settings_default_hotkey",
+      "tinkflow_src_tauri_src_settings_default_injection_mode",
+      "tinkflow_src_tauri_src_settings_profile",
+      "tinkflow_src_tauri_src_settings_rs_apphandle",
+      "tinkflow_src_tauri_src_settings_rs_default",
+      "tinkflow_src_tauri_src_settings_rs_mutex",
+      "tinkflow_src_tauri_src_settings_rs_option",
+      "tinkflow_src_tauri_src_settings_rs_pathbuf",
+      "tinkflow_src_tauri_src_settings_rs_result",
+      "tinkflow_src_tauri_src_settings_rs_self",
+      "tinkflow_src_tauri_src_settings_rs_string",
+      "tinkflow_src_tauri_src_settings_rs_vec",
+      "tinkflow_src_tauri_src_settings_settingsmanager",
+      "tinkflow_src_tauri_src_settings_settingsmanager_get",
+      "tinkflow_src_tauri_src_settings_settingsmanager_new",
+      "tinkflow_src_tauri_src_settings_settingsmanager_update"
+    ],
+    "10": [
+      "tinkflow_src_tauri_src_corrections",
+      "tinkflow_src_tauri_src_corrections_correctionentry",
+      "tinkflow_src_tauri_src_corrections_correctionmanager",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_add",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_apply",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_list",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_new",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_remove",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_save_locked",
+      "tinkflow_src_tauri_src_corrections_correctionmanager_set_enabled",
+      "tinkflow_src_tauri_src_corrections_now_ms",
+      "tinkflow_src_tauri_src_corrections_replace_ascii_case_insensitive",
+      "tinkflow_src_tauri_src_corrections_replacement_is_case_insensitive",
+      "tinkflow_src_tauri_src_corrections_rs_apphandle",
+      "tinkflow_src_tauri_src_corrections_rs_mutex",
+      "tinkflow_src_tauri_src_corrections_rs_pathbuf",
+      "tinkflow_src_tauri_src_corrections_rs_result",
+      "tinkflow_src_tauri_src_corrections_rs_self",
+      "tinkflow_src_tauri_src_corrections_rs_string",
+      "tinkflow_src_tauri_src_corrections_rs_vec"
+    ],
+    "11": [
+      "tinkflow_src_tauri_src_history",
+      "tinkflow_src_tauri_src_history_historymanager",
+      "tinkflow_src_tauri_src_history_historymanager_add",
+      "tinkflow_src_tauri_src_history_historymanager_clear",
+      "tinkflow_src_tauri_src_history_historymanager_last",
+      "tinkflow_src_tauri_src_history_historymanager_list",
+      "tinkflow_src_tauri_src_history_historymanager_new",
+      "tinkflow_src_tauri_src_history_historymanager_save_locked",
+      "tinkflow_src_tauri_src_history_now_ms",
+      "tinkflow_src_tauri_src_history_rs_apphandle",
+      "tinkflow_src_tauri_src_history_rs_mutex",
+      "tinkflow_src_tauri_src_history_rs_option",
+      "tinkflow_src_tauri_src_history_rs_pathbuf",
+      "tinkflow_src_tauri_src_history_rs_result",
+      "tinkflow_src_tauri_src_history_rs_self",
+      "tinkflow_src_tauri_src_history_rs_string",
+      "tinkflow_src_tauri_src_history_rs_vec",
+      "tinkflow_src_tauri_src_history_transcriptionrecord"
+    ],
+    "12": [
+      "enigo",
+      "tinkflow_src_tauri_src_injector",
+      "tinkflow_src_tauri_src_injector_copy_text_to_clipboard",
+      "tinkflow_src_tauri_src_injector_inject_via_clipboard",
+      "tinkflow_src_tauri_src_injector_injectionreport",
+      "tinkflow_src_tauri_src_injector_paste_clipboard",
+      "tinkflow_src_tauri_src_injector_rs_option",
+      "tinkflow_src_tauri_src_injector_rs_result",
+      "tinkflow_src_tauri_src_injector_rs_self",
+      "tinkflow_src_tauri_src_injector_rs_string",
+      "tinkflow_src_tauri_src_injector_set_clipboard_text",
+      "tinkflow_src_tauri_src_injector_textinjector",
+      "tinkflow_src_tauri_src_injector_textinjector_inject",
+      "tinkflow_src_tauri_src_injector_textinjector_inject_direct",
+      "tinkflow_src_tauri_src_injector_textinjector_inject_with_mode",
+      "tinkflow_src_tauri_src_injector_textinjector_new",
+      "tinkflow_src_tauri_src_injector_textinjector_report"
+    ],
+    "13": [
+      "hotkey",
+      "tinkflow_src_tauri_src_hotkey",
+      "tinkflow_src_tauri_src_hotkey_context_with_profile",
+      "tinkflow_src_tauri_src_hotkey_emit_recording_state",
+      "tinkflow_src_tauri_src_hotkey_hotkeylistener",
+      "tinkflow_src_tauri_src_hotkey_hotkeylistener_init_on_main_thread",
+      "tinkflow_src_tauri_src_hotkey_hotkeylistener_update_hotkey_on_main_thread",
+      "tinkflow_src_tauri_src_hotkey_parse_hotkey",
+      "tinkflow_src_tauri_src_hotkey_rs_apphandle",
+      "tinkflow_src_tauri_src_hotkey_rs_appsettings",
+      "tinkflow_src_tauri_src_hotkey_rs_arc",
+      "tinkflow_src_tauri_src_hotkey_rs_atomicu32",
+      "tinkflow_src_tauri_src_hotkey_rs_mutex",
+      "tinkflow_src_tauri_src_hotkey_rs_recordingstatestore",
+      "tinkflow_src_tauri_src_hotkey_rs_string",
+      "tinkflow_src_tauri_src_hotkey_set_overlay_visible"
+    ],
+    "14": [
+      "ref_autostart_allow_disable",
+      "ref_autostart_allow_enable",
+      "ref_autostart_allow_is_enabled",
+      "ref_core_default",
+      "ref_main",
+      "ref_opener_default",
+      "tinkflow_src_tauri_capabilities_default",
+      "tinkflow_src_tauri_capabilities_default_description",
+      "tinkflow_src_tauri_capabilities_default_identifier",
+      "tinkflow_src_tauri_capabilities_default_permissions",
+      "tinkflow_src_tauri_capabilities_default_schema",
+      "tinkflow_src_tauri_capabilities_default_windows"
+    ],
+    "15": [
+      "ref_vite_config_ts",
+      "tinkflow_tsconfig_node",
+      "tinkflow_tsconfig_node_compileroptions",
+      "tinkflow_tsconfig_node_compileroptions_allowsyntheticdefaultimports",
+      "tinkflow_tsconfig_node_compileroptions_composite",
+      "tinkflow_tsconfig_node_compileroptions_module",
+      "tinkflow_tsconfig_node_compileroptions_moduleresolution",
+      "tinkflow_tsconfig_node_compileroptions_skiplibcheck",
+      "tinkflow_tsconfig_node_include"
+    ],
+    "16": [
+      "tinkflow_src_tauri_src_context",
+      "tinkflow_src_tauri_src_context_contextdetector",
+      "tinkflow_src_tauri_src_context_contextdetector_detect_current_context",
+      "tinkflow_src_tauri_src_context_contextdetector_new",
+      "tinkflow_src_tauri_src_context_get_foreground_window_title",
+      "tinkflow_src_tauri_src_context_rs_option",
+      "tinkflow_src_tauri_src_context_rs_self",
+      "tinkflow_src_tauri_src_context_rs_string"
+    ],
+    "17": [
+      "tinkflow_src_components_settings",
+      "tinkflow_src_components_settings_settings"
+    ],
+    "18": [
+      "tinkflow_src_tauri_build",
+      "tinkflow_src_tauri_build_main"
+    ],
+    "19": [
+      "tinkflow_src_tauri_src_bin_test_audio",
+      "tinkflow_src_tauri_src_bin_test_audio_main"
+    ],
+    "20": [
+      "tinkflow_src_tauri_src_main",
+      "tinkflow_src_tauri_src_main_main"
+    ],
+    "21": [
+      "correctionentry"
+    ],
+    "22": [
+      "tinkflow_src_tauri_src_audio_rs_arc"
+    ],
+    "23": [
+      "tinkflow_src_tauri_src_audio_rs_mutex"
+    ],
+    "24": [
+      "tinkflow_src_tauri_src_audio_rs_result"
+    ],
+    "25": [
+      "tinkflow_src_tauri_src_audio_rs_settingsmanager"
+    ],
+    "26": [
+      "tinkflow_src_tauri_src_dictionary_rs_default"
+    ],
+    "27": [
+      "tinkflow_src_tauri_src_lib_rs_appsettings"
+    ],
+    "28": [
+      "tinkflow_src_tauri_src_lib_rs_atomicu32"
+    ],
+    "29": [
+      "tinkflow_src_tauri_src_lib_rs_recordingstatestore"
+    ],
+    "30": [
+      "tinkflow_src_tauri_src_llm_rs_default"
+    ],
+    "31": [
+      "tinkflow_src_tauri_src_whisper_rs_downloadcancelflag"
+    ],
+    "32": [
+      "tinkflow_src_tauri_src_whisper_rs_mutex"
+    ],
+    "33": [
+      "tinkflow_src_tauri_src_whisper_rs_option"
+    ],
+    "34": [
+      "tinkflow_src_tauri_src_whisper_rs_pathbuf"
+    ],
+    "35": [
+      "tinkflow_src_tauri_src_whisper_rs_state"
+    ],
+    "36": [
+      "tinkflow_src_vite_env_d"
+    ],
+    "37": [
+      "tinkflow_vite_config"
+    ],
+    "38": [
+      "transcriptionrecord"
+    ]
+  },
+  "cohesion": {
+    "0": 0.15220483641536273,
+    "1": 0.08961593172119488,
+    "2": 0.058823529411764705,
+    "3": 0.07196969696969698,
+    "4": 0.09090909090909091,
+    "5": 0.06896551724137931,
+    "6": 0.19,
+    "7": 0.1422924901185771,
+    "8": 0.08695652173913043,
+    "9": 0.16205533596837945,
+    "10": 0.21578947368421053,
+    "11": 0.22875816993464052,
+    "12": 0.3161764705882353,
+    "13": 0.20833333333333334,
+    "14": 0.16666666666666666,
+    "15": 0.2222222222222222,
+    "16": 0.35714285714285715,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0
+  },
+  "gods": [
+    {
+      "id": "tinkflow_tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "tinkflow_src_tauri_src_llm_ollamaclient",
+      "label": "OllamaClient",
+      "degree": 16
+    },
+    {
+      "id": "tinkflow_src_tauri_src_corrections_correctionmanager",
+      "label": "CorrectionManager",
+      "degree": 14
+    },
+    {
+      "id": "tinkflow_src_tauri_src_audio_audiocapturer",
+      "label": "AudioCapturer",
+      "degree": 14
+    },
+    {
+      "id": "tinkflow_src_tauri_src_history_historymanager",
+      "label": "HistoryManager",
+      "degree": 13
+    },
+    {
+      "id": "tinkflow_src_tauri_src_whisper_whispertranscriber",
+      "label": "WhisperTranscriber",
+      "degree": 13
+    },
+    {
+      "id": "tinkflow_src_tauri_src_lib_update_app_settings",
+      "label": "update_app_settings()",
+      "degree": 11
+    },
+    {
+      "id": "tinkflow_src_tauri_src_settings_appsettings",
+      "label": "AppSettings",
+      "degree": 10
+    },
+    {
+      "id": "tinkflow_src_tauri_src_whisper_download_whisper_model",
+      "label": "download_whisper_model()",
+      "degree": 10
+    },
+    {
+      "id": "tinkflow_src_tauri_tauri_conf_bundle",
+      "label": "bundle",
+      "degree": 9
+    }
+  ],
+  "surprises": [
+    {
+      "source": "check_ollama_status()",
+      "target": "OllamaClient",
+      "source_files": [
+        "tinkflow/src-tauri/src/lib.rs",
+        "tinkflow/src-tauri/src/llm.rs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "list_ollama_models()",
+      "target": "OllamaClient",
+      "source_files": [
+        "tinkflow/src-tauri/src/lib.rs",
+        "tinkflow/src-tauri/src/llm.rs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "update_app_settings()",
+      "target": "WhisperTranscriber",
+      "source_files": [
+        "tinkflow/src-tauri/src/lib.rs",
+        "tinkflow/src-tauri/src/whisper.rs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "get_model_health()",
+      "target": "OllamaClient",
+      "source_files": [
+        "tinkflow/src-tauri/src/lib.rs",
+        "tinkflow/src-tauri/src/llm.rs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "Monitor()",
+      "target": "useRecording()",
+      "source_files": [
+        "tinkflow/src/components/Monitor.tsx",
+        "tinkflow/src/hooks/useRecording.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

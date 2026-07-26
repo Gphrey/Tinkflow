@@ -8,16 +8,39 @@ interface AppSettings {
     llm_model: string;
     audio_device_name: string;
     onboarding_completed: boolean;
+    injection_mode: string;
+    dictation_enabled: boolean;
 }
 
-/** Curated list of recommended models for text polishing — lightweight and fast */
+interface ModelHealth {
+    whisper_model: string;
+    whisper_installed: boolean;
+    llm_model: string;
+    ollama_connected: boolean;
+    ollama_version?: string | null;
+    ollama_models: string[];
+    injection_mode: string;
+    dictation_enabled: boolean;
+}
+
+interface TranscriptionRecord {
+    id: number;
+    created_at_ms: number;
+    final_text: string;
+    context: string;
+    injection_mode: string;
+    injection_succeeded: boolean;
+    injection_error?: string | null;
+}
+
+/** Curated list of recommended models for text polishing - lightweight and fast */
 const RECOMMENDED_MODELS = [
-    { name: 'phi3:mini', label: 'Phi-3 Mini', size: '2.3 GB', desc: 'Microsoft — fast, great at text cleanup', recommended: true },
-    { name: 'llama3.2:1b', label: 'Llama 3.2 1B', size: '1.3 GB', desc: 'Meta — ultra lightweight, decent quality' },
-    { name: 'llama3.2:3b', label: 'Llama 3.2 3B', size: '2.0 GB', desc: 'Meta — balanced speed & accuracy' },
-    { name: 'gemma2:2b', label: 'Gemma 2 2B', size: '1.6 GB', desc: 'Google — compact and capable' },
-    { name: 'mistral:7b', label: 'Mistral 7B', size: '4.1 GB', desc: 'Mistral AI — high quality, needs more RAM' },
-    { name: 'qwen2.5:3b', label: 'Qwen 2.5 3B', size: '1.9 GB', desc: 'Alibaba — good multilingual support' },
+    { name: 'phi3:mini', label: 'Phi-3 Mini', size: '2.3 GB', desc: 'Microsoft - fast, great at text cleanup', recommended: true },
+    { name: 'llama3.2:1b', label: 'Llama 3.2 1B', size: '1.3 GB', desc: 'Meta - ultra lightweight, decent quality' },
+    { name: 'llama3.2:3b', label: 'Llama 3.2 3B', size: '2.0 GB', desc: 'Meta - balanced speed and accuracy' },
+    { name: 'gemma2:2b', label: 'Gemma 2 2B', size: '1.6 GB', desc: 'Google - compact and capable' },
+    { name: 'mistral:7b', label: 'Mistral 7B', size: '4.1 GB', desc: 'Mistral AI - high quality, needs more RAM' },
+    { name: 'qwen2.5:3b', label: 'Qwen 2.5 3B', size: '1.9 GB', desc: 'Alibaba - good multilingual support' },
 ];
 
 export function Dashboard() {
@@ -32,7 +55,13 @@ export function Dashboard() {
         llm_model: '',
         audio_device_name: 'default',
         onboarding_completed: false,
+        injection_mode: 'auto',
+        dictation_enabled: true,
     });
+    const [modelHealth, setModelHealth] = useState<ModelHealth | null>(null);
+    const [history, setHistory] = useState<TranscriptionRecord[]>([]);
+    const [copyStatus, setCopyStatus] = useState<string>('');
+    const [recordingState, setRecordingState] = useState<string>('idle');
 
     // Derived: models installed by user that aren't in RECOMMENDED_MODELS
     const otherModels = installedModels.filter(m =>
@@ -42,6 +71,8 @@ export function Dashboard() {
     useEffect(() => {
         loadSettings();
         checkOllama();
+        loadModelHealth();
+        loadHistory();
 
         const unlistenOllama = listen<number>('ollama-download-progress', (event) => {
             if (event.payload === -1) {
@@ -55,8 +86,17 @@ export function Dashboard() {
             }
         });
 
+
+        const unlistenRecording = listen<string>('recording-state', (event) => {
+            setRecordingState(event.payload);
+            if (event.payload === 'done' || event.payload === 'error') {
+                loadHistory();
+                loadModelHealth();
+            }
+        });
         return () => {
             unlistenOllama.then(f => f());
+            unlistenRecording.then(f => f());
         };
     }, []);
 
@@ -148,6 +188,51 @@ export function Dashboard() {
         // Rust emits -1.0 progress which resets state in the listener above
     };
 
+    const loadModelHealth = async () => {
+        try {
+            setModelHealth(await invoke<ModelHealth>('get_model_health'));
+        } catch (e) {
+            console.error('Failed to load model health:', e);
+        }
+    };
+
+    const loadHistory = async () => {
+        try {
+            setHistory(await invoke<TranscriptionRecord[]>('list_transcription_history', { limit: 5 }));
+        } catch (e) {
+            console.error('Failed to load history:', e);
+        }
+    };
+
+    const handleCopyLast = async () => {
+        try {
+            await invoke('copy_last_transcription');
+            setCopyStatus('Copied last transcription.');
+            await loadHistory();
+        } catch (e: any) {
+            setCopyStatus(e?.toString() || 'Nothing to copy yet.');
+        }
+    };
+
+    const handleCopyRecord = async (id: number) => {
+        try {
+            await invoke('copy_transcription', { id });
+            setCopyStatus('Copied transcription.');
+        } catch (e: any) {
+            setCopyStatus(e?.toString() || 'Could not copy that transcription.');
+        }
+    };
+
+    const handleClearHistory = async () => {
+        try {
+            await invoke('clear_transcription_history');
+            setHistory([]);
+            setCopyStatus('History cleared.');
+        } catch (e: any) {
+            setCopyStatus(e?.toString() || 'Could not clear history.');
+        }
+    };
+
     return (
         <div className="dashboard">
             {/* Header */}
@@ -156,11 +241,11 @@ export function Dashboard() {
                     <img src="/logo.png" alt="Tinkflow" width="26" height="26" style={{ objectFit: 'contain' }} />
                     <h1 className="dash-title">Tinkflow</h1>
                 </div>
-                <p className="dash-subtitle">Voice-to-text for developers — local, private, fast.</p>
+                <p className="dash-subtitle">Voice-to-text for developers - local, private, fast.</p>
             </div>
 
             {/* Quick Start Card */}
-            <div className="dash-card accent-card">
+            <div className="dash-card accent-card dictation-card">
                 <div className="dash-card-header">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
@@ -175,8 +260,55 @@ export function Dashboard() {
                     <span>to dictate</span>
                 </div>
                 <p className="dash-hint">Speak naturally, then release. Text appears where your cursor is.</p>
+                <p className={`dash-live-status ${recordingState === 'idle' ? 'is-ready' : 'is-active'}`}>
+                    {recordingState === 'idle' ? 'Ready for dictation' : `Dictation ${recordingState}`}
+                </p>
             </div>
 
+            {/* v1.5 Model Center */}
+            <div className="dash-card system-card">
+                <div className="dash-card-header">
+                    <span>Model Center</span>
+                    <button className="ghost-btn" onClick={() => { loadModelHealth(); checkOllama(); }}>Refresh</button>
+                </div>
+                <div className="dash-status-row">
+                    <div className={`status-dot ${modelHealth?.whisper_installed ? 'connected-dot' : 'not-found-dot'}`} />
+                    <span className="dash-status-text">Whisper {modelHealth?.whisper_model || settings.whisper_model}: {modelHealth?.whisper_installed ? 'installed' : 'missing'}</span>
+                </div>
+                <div className="dash-status-row">
+                    <div className={`status-dot ${modelHealth?.ollama_connected ? 'connected-dot' : 'not-found-dot'}`} />
+                    <span className="dash-status-text">Ollama {modelHealth?.ollama_connected ? `connected${modelHealth.ollama_version ? ` (${modelHealth.ollama_version})` : ''}` : 'offline'}</span>
+                </div>
+                <p className="dash-hint">Injection: {modelHealth?.injection_mode || settings.injection_mode} - Dictation: {(modelHealth?.dictation_enabled ?? settings.dictation_enabled) ? 'enabled' : 'disabled'}</p>
+            </div>
+
+            {/* v1.5 Recovery */}
+            <div className="dash-card history-card">
+                <div className="dash-card-header">
+                    <span>Last Dictations</span>
+                    <div className="dash-actions">
+                        <button className="ghost-btn" onClick={handleCopyLast} disabled={history.length === 0}>Copy Last</button>
+                        <button className="ghost-btn" onClick={handleClearHistory} disabled={history.length === 0}>Clear</button>
+                    </div>
+                </div>
+                {copyStatus && <p className="dash-hint">{copyStatus}</p>}
+                <div className="model-list">
+                    {history.length === 0 ? (
+                        <p className="dash-hint">No transcriptions saved yet.</p>
+                    ) : history.map(record => (
+                        <div key={record.id} className={`model-item ${record.injection_succeeded ? 'model-installed' : ''}`}>
+                            <div className="model-item-left">
+                                <div className="model-item-name">{record.context} - {record.injection_mode}</div>
+                                <div className="model-item-desc">{record.final_text}</div>
+                            </div>
+                            <div className="model-item-right">
+                                <span className="model-item-size">{record.injection_succeeded ? 'Inserted' : 'Saved'}</span>
+                                <button className="ghost-btn compact-btn" onClick={() => handleCopyRecord(record.id)}>Copy</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
             {/* Status Cards Row */}
             <div className="dash-cards-row">
                 <div className="dash-card">
@@ -224,7 +356,7 @@ export function Dashboard() {
                 </div>
             </div>
 
-            {/* LLM Model Selector — Curated List */}
+            {/* LLM Model Selector - Curated List */}
             {ollamaStatus === 'connected' && (
                 <div className="dash-card">
                     <div className="dash-card-header">
@@ -261,7 +393,7 @@ export function Dashboard() {
                                             <div className="model-item-status pulling" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                                     <div className="mini-spinner" />
-                                                    <span>{cancelling ? 'Cancelling…' : 'Downloading...'}</span>
+                                                    <span>{cancelling ? 'Cancelling...' : 'Downloading...'}</span>
                                                 </div>
                                                 <span className="font-mono text-xs" style={{ color: 'var(--accent-cyan)' }}>{ollamaProgress.toFixed(1)}%</span>
                                                 <button
@@ -269,7 +401,7 @@ export function Dashboard() {
                                                     disabled={cancelling}
                                                     style={{ fontSize: '0.7rem', padding: '2px 8px', marginTop: '2px', borderRadius: '4px', border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(239,68,68,0.08)', color: 'var(--accent-red, #ef4444)', cursor: cancelling ? 'not-allowed' : 'pointer', opacity: cancelling ? 0.5 : 1 }}
                                                 >
-                                                    {cancelling ? 'Cancelling…' : 'Cancel'}
+                                                    {cancelling ? 'Cancelling...' : 'Cancel'}
                                                 </button>
                                             </div>
                                         ) : installed ? (

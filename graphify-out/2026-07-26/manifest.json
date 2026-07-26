@@ -1,0 +1,172 @@
+{
+  "tinkflow/.vscode/extensions.json": {
+    "mtime": 1784526254.0148065,
+    "ast_hash": "d1846e92ceedfa6eb08a69cbb38c190a",
+    "semantic_hash": "d1846e92ceedfa6eb08a69cbb38c190a"
+  },
+  "tinkflow/package.json": {
+    "mtime": 1785083711.186721,
+    "ast_hash": "2d90b56bd65c2c88b20b985c62c5c46f",
+    "semantic_hash": "2d90b56bd65c2c88b20b985c62c5c46f"
+  },
+  "tinkflow/src-tauri/build.rs": {
+    "mtime": 1784526254.043038,
+    "ast_hash": "667702979da61fdc96948886b7cd7a33",
+    "semantic_hash": "667702979da61fdc96948886b7cd7a33"
+  },
+  "tinkflow/src-tauri/capabilities/default.json": {
+    "mtime": 1784526254.043038,
+    "ast_hash": "9010a344949bb6b44e79fd3761b1b4e4",
+    "semantic_hash": "9010a344949bb6b44e79fd3761b1b4e4"
+  },
+  "tinkflow/src-tauri/src/audio.rs": {
+    "mtime": 1784557536.4036317,
+    "ast_hash": "93cb2bf3d6ddfa9753bed52aa2769e07",
+    "semantic_hash": "93cb2bf3d6ddfa9753bed52aa2769e07"
+  },
+  "tinkflow/src-tauri/src/bin/test_audio.rs": {
+    "mtime": 1784557536.5404668,
+    "ast_hash": "92d2fd88f155b2fee593ae10c0eef4c7",
+    "semantic_hash": "92d2fd88f155b2fee593ae10c0eef4c7"
+  },
+  "tinkflow/src-tauri/src/context.rs": {
+    "mtime": 1784557536.4495096,
+    "ast_hash": "302b25435445d0cb227f101b60b8be9c",
+    "semantic_hash": "302b25435445d0cb227f101b60b8be9c"
+  },
+  "tinkflow/src-tauri/src/dictionary.rs": {
+    "mtime": 1785073831.7211058,
+    "ast_hash": "bed45ee1bb65629856ee1d9a47e55e71",
+    "semantic_hash": "bed45ee1bb65629856ee1d9a47e55e71"
+  },
+  "tinkflow/src-tauri/src/hotkey.rs": {
+    "mtime": 1785081945.9692712,
+    "ast_hash": "f1ef64516923025c4cb8ed68f0ef2d16",
+    "semantic_hash": "f1ef64516923025c4cb8ed68f0ef2d16"
+  },
+  "tinkflow/src-tauri/src/injector.rs": {
+    "mtime": 1785082333.6942713,
+    "ast_hash": "9698dcf20a1e75b72c1d9f1ad195c6c4",
+    "semantic_hash": "9698dcf20a1e75b72c1d9f1ad195c6c4"
+  },
+  "tinkflow/src-tauri/src/lib.rs": {
+    "mtime": 1785080138.9109702,
+    "ast_hash": "c9d8c318b89afe9d082ce92306a24f82",
+    "semantic_hash": "c9d8c318b89afe9d082ce92306a24f82"
+  },
+  "tinkflow/src-tauri/src/llm.rs": {
+    "mtime": 1784559009.4716015,
+    "ast_hash": "5c4fe8b1ede9f141539f4c1c3c651723",
+    "semantic_hash": "5c4fe8b1ede9f141539f4c1c3c651723"
+  },
+  "tinkflow/src-tauri/src/main.rs": {
+    "mtime": 1784526254.1045983,
+    "ast_hash": "b00b3e0397d00d973cbaf428abe15ac5",
+    "semantic_hash": "b00b3e0397d00d973cbaf428abe15ac5"
+  },
+  "tinkflow/src-tauri/src/settings.rs": {
+    "mtime": 1785073831.5455468,
+    "ast_hash": "96162b57e8dc2fd1c02d3e6c915ed0de",
+    "semantic_hash": "96162b57e8dc2fd1c02d3e6c915ed0de"
+  },
+  "tinkflow/src-tauri/src/whisper.rs": {
+    "mtime": 1785074806.2195077,
+    "ast_hash": "03a68a0c4f7b4b5b27fd2e4cc0e755ed",
+    "semantic_hash": "03a68a0c4f7b4b5b27fd2e4cc0e755ed"
+  },
+  "tinkflow/src-tauri/tauri.conf.json": {
+    "mtime": 1785084079.077665,
+    "ast_hash": "c840126240befd45e139089bcdb0b0f5",
+    "semantic_hash": "c840126240befd45e139089bcdb0b0f5"
+  },
+  "tinkflow/src/App.tsx": {
+    "mtime": 1785079255.101591,
+    "ast_hash": "380dad829795548104868d9ff7f4a9de",
+    "semantic_hash": "380dad829795548104868d9ff7f4a9de"
+  },
+  "tinkflow/src/components/Dashboard.tsx": {
+    "mtime": 1785077807.6200006,
+    "ast_hash": "e25af2193b42adf3a12dc090d6b9deac",
+    "semantic_hash": "e25af2193b42adf3a12dc090d6b9deac"
+  },
+  "tinkflow/src/components/ModelManager.tsx": {
+    "mtime": 1785083929.9411507,
+    "ast_hash": "5c38c8eb866f40123c5d57a6f56ddaa4",
+    "semantic_hash": "5c38c8eb866f40123c5d57a6f56ddaa4"
+  },
+  "tinkflow/src/components/Monitor.tsx": {
+    "mtime": 1784526254.1084929,
+    "ast_hash": "f836a0757307653de122688a1206f94c",
+    "semantic_hash": "f836a0757307653de122688a1206f94c"
+  },
+  "tinkflow/src/components/Onboarding.tsx": {
+    "mtime": 1785083903.0504603,
+    "ast_hash": "5407386aba47172fb06ec02b9acdd6b0",
+    "semantic_hash": "5407386aba47172fb06ec02b9acdd6b0"
+  },
+  "tinkflow/src/components/Settings.tsx": {
+    "mtime": 1784526254.109493,
+    "ast_hash": "9575e2456be47212758ceb4af4166a81",
+    "semantic_hash": "9575e2456be47212758ceb4af4166a81"
+  },
+  "tinkflow/src/components/SettingsView.tsx": {
+    "mtime": 1785077807.6598952,
+    "ast_hash": "5920d8263645a5d09c6eda7594119385",
+    "semantic_hash": "5920d8263645a5d09c6eda7594119385"
+  },
+  "tinkflow/src/components/Sidebar.tsx": {
+    "mtime": 1785077807.6778462,
+    "ast_hash": "27942aad6ffdbbddb7e499ef9c39d325",
+    "semantic_hash": "27942aad6ffdbbddb7e499ef9c39d325"
+  },
+  "tinkflow/src/components/StatusIndicator.tsx": {
+    "mtime": 1784526254.1104913,
+    "ast_hash": "d445221bee50bb02c94c2da4385aab92",
+    "semantic_hash": "d445221bee50bb02c94c2da4385aab92"
+  },
+  "tinkflow/src/hooks/useRecording.ts": {
+    "mtime": 1784526254.1104913,
+    "ast_hash": "cc709cb39e0bdf556d25c6b86e79ec92",
+    "semantic_hash": "cc709cb39e0bdf556d25c6b86e79ec92"
+  },
+  "tinkflow/src/main.tsx": {
+    "mtime": 1784526254.1114874,
+    "ast_hash": "ea7bebc824e5f67b3b9aef34cb4f9491",
+    "semantic_hash": "ea7bebc824e5f67b3b9aef34cb4f9491"
+  },
+  "tinkflow/src/vite-env.d.ts": {
+    "mtime": 1784526254.1124856,
+    "ast_hash": "8f68c27c3fc38817b2726b20e2d4f1ee",
+    "semantic_hash": "8f68c27c3fc38817b2726b20e2d4f1ee"
+  },
+  "tinkflow/tsconfig.json": {
+    "mtime": 1784526254.1124856,
+    "ast_hash": "7a931cf665b999dd157ba517f5cbd820",
+    "semantic_hash": "7a931cf665b999dd157ba517f5cbd820"
+  },
+  "tinkflow/tsconfig.node.json": {
+    "mtime": 1784526254.113483,
+    "ast_hash": "281e378713152cccc7860c818db55849",
+    "semantic_hash": "281e378713152cccc7860c818db55849"
+  },
+  "tinkflow/vite.config.ts": {
+    "mtime": 1784526254.113483,
+    "ast_hash": "23eb495142fc7ca62b218d172cb93f0a",
+    "semantic_hash": "23eb495142fc7ca62b218d172cb93f0a"
+  },
+  "tinkflow/src-tauri/src/corrections.rs": {
+    "mtime": 1784554166.823012,
+    "ast_hash": "1a803454b5542b5b49063737e94771ed",
+    "semantic_hash": "1a803454b5542b5b49063737e94771ed"
+  },
+  "tinkflow/src-tauri/src/history.rs": {
+    "mtime": 1785073832.29101,
+    "ast_hash": "3e3d70bf19783466d9c76a3b9249fb6e",
+    "semantic_hash": "3e3d70bf19783466d9c76a3b9249fb6e"
+  },
+  "tinkflow/src/components/DictationResultPanel.tsx": {
+    "mtime": 1785080473.6754875,
+    "ast_hash": "b03d9271ada36857285cc721108bd929",
+    "semantic_hash": "b03d9271ada36857285cc721108bd929"
+  }
+}

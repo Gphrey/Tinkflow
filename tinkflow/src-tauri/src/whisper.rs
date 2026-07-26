@@ -5,18 +5,18 @@
 //! developer dictation with a greedy, single-pass inference strategy.
 //!
 //! ```text
-//! Audio capture → WhisperTranscriber::transcribe() → DeveloperDictionary → LLM polish
+//! Audio capture -> WhisperTranscriber::transcribe() -> DeveloperDictionary -> LLM polish
 //! ```
 
 use std::path::PathBuf;
 use tauri::{Emitter, Manager};
 use whisper_rs::{FullParams, SamplingStrategy, WhisperContext, WhisperContextParameters};
 
-// ─── Supported Models ────────────────────────────────────────────────────────
+// Supported Models
 
 /// Canonical model identifiers and their HuggingFace download URLs.
 ///
-/// Adding a new model is a single-line change here — all other functions
+/// Adding a new model is a single-line change here - all other functions
 /// derive behaviour from this table.
 const MODELS: &[(&str, &str)] = &[
     (
@@ -63,7 +63,7 @@ fn model_url(canonical: &str) -> Option<&'static str> {
         .map(|(_, url)| *url)
 }
 
-// ─── Transcriber ─────────────────────────────────────────────────────────────
+// Transcriber
 
 /// Encapsulates a loaded Whisper GGML context for speech-to-text.
 ///
@@ -109,7 +109,7 @@ impl WhisperTranscriber {
         }
 
         let params = WhisperContextParameters::default();
-        let ctx = WhisperContext::new_with_params(&self.model_path.to_string_lossy(), params)
+        let ctx = WhisperContext::new_with_params(&self.model_path, params)
             .map_err(|e| format!("Failed to load Whisper model: {}", e))?;
 
         self.context = Some(ctx);
@@ -123,13 +123,12 @@ impl WhisperTranscriber {
 
     /// Run inference on `audio_data` (16 kHz, f32, mono).
     ///
-    /// Uses a **greedy** sampling strategy with up to 4 threads for minimal
-    /// latency on short-form dictation clips.
+    /// Uses a greedy strategy with a wider candidate search in accuracy mode.
     ///
     /// # Errors
     ///
     /// Returns an error if the model has not been loaded or if inference fails.
-    pub fn transcribe(&self, audio_data: &[f32]) -> Result<String, String> {
+    pub fn transcribe(&self, audio_data: &[f32], quality: &str) -> Result<String, String> {
         let ctx = self
             .context
             .as_ref()
@@ -139,8 +138,14 @@ impl WhisperTranscriber {
             .create_state()
             .map_err(|e| format!("Failed to create Whisper state: {}", e))?;
 
-        let mut params = FullParams::new(SamplingStrategy::Greedy { best_of: 1 });
+        let best_of = if quality == "accurate" { 5 } else { 1 };
+        let mut params = FullParams::new(SamplingStrategy::Greedy { best_of });
         params.set_language(Some("en"));
+        params.set_initial_prompt(crate::dictionary::DeveloperDictionary::RECOGNITION_PROMPT);
+        params.set_suppress_blank(true);
+        params.set_suppress_nst(true);
+        params.set_no_context(true);
+        params.set_temperature(0.0);
         params.set_print_progress(false);
         params.set_print_special(false);
         params.set_print_realtime(false);
@@ -167,7 +172,7 @@ impl WhisperTranscriber {
     }
 }
 
-// ─── Path Helpers ────────────────────────────────────────────────────────────
+// Path Helpers
 
 /// Resolve the on-disk path for a given model name.
 ///
@@ -177,10 +182,7 @@ impl WhisperTranscriber {
 ///
 /// Returns an error if the app data directory cannot be resolved or if
 /// `model_name` is not a recognised model.
-pub fn get_model_path(
-    app: &tauri::AppHandle,
-    model_name: &str,
-) -> Result<PathBuf, String> {
+pub fn get_model_path(app: &tauri::AppHandle, model_name: &str) -> Result<PathBuf, String> {
     let canonical = canonical_model_name(model_name).ok_or_else(|| {
         format!(
             "Unknown model: '{}'. Supported: {}",
@@ -193,20 +195,20 @@ pub fn get_model_path(
         )
     })?;
 
-    let app_dir = app.path().app_data_dir().map_err(|e: tauri::Error| e.to_string())?;
+    let app_dir = app
+        .path()
+        .app_data_dir()
+        .map_err(|e: tauri::Error| e.to_string())?;
     std::fs::create_dir_all(&app_dir).map_err(|e| e.to_string())?;
 
     Ok(app_dir.join(format!("ggml-{}.bin", canonical)))
 }
 
-// ─── Tauri Commands ──────────────────────────────────────────────────────────
+// Tauri Commands
 
 /// Check whether a Whisper model binary exists on disk.
 #[tauri::command]
-pub fn check_whisper_model(
-    app: tauri::AppHandle,
-    model_name: String,
-) -> Result<bool, String> {
+pub fn check_whisper_model(app: tauri::AppHandle, model_name: String) -> Result<bool, String> {
     let path = get_model_path(&app, &model_name)?;
     Ok(path.exists())
 }
@@ -215,10 +217,11 @@ pub fn check_whisper_model(
 ///
 /// Returns canonical short names (e.g. `["tiny.en", "base.en"]`).
 #[tauri::command]
-pub fn list_installed_whisper_models(
-    app: tauri::AppHandle,
-) -> Result<Vec<String>, String> {
-    let app_dir = app.path().app_data_dir().map_err(|e: tauri::Error| e.to_string())?;
+pub fn list_installed_whisper_models(app: tauri::AppHandle) -> Result<Vec<String>, String> {
+    let app_dir = app
+        .path()
+        .app_data_dir()
+        .map_err(|e: tauri::Error| e.to_string())?;
     let mut installed = Vec::new();
 
     if let Ok(entries) = std::fs::read_dir(app_dir) {
@@ -242,7 +245,7 @@ pub fn list_installed_whisper_models(
 /// Writes to a `.tmp` file first, then atomically renames on success to
 /// prevent partial/corrupt binaries from being used.
 ///
-/// Emits `"model-download-progress"` events (0.0–100.0) to the frontend.
+/// Emits `"model-download-progress"` events (0.0-100.0) to the frontend.
 ///
 /// # Errors
 ///
@@ -259,9 +262,8 @@ pub async fn download_whisper_model(
         return Ok(());
     }
 
-    let canonical = canonical_model_name(&model_name).ok_or_else(|| {
-        format!("Unknown model: '{}'", model_name)
-    })?;
+    let canonical = canonical_model_name(&model_name)
+        .ok_or_else(|| format!("Unknown model: '{}'", model_name))?;
     let url = model_url(canonical)
         .ok_or_else(|| format!("No URL for model: '{}'", canonical))?
         .to_string();
@@ -290,8 +292,7 @@ pub async fn download_whisper_model(
         }
 
         let total_size = response.content_length().unwrap_or(75_000_000);
-        let mut file =
-            std::fs::File::create(&tmp_path).map_err(|e| e.to_string())?;
+        let mut file = std::fs::File::create(&tmp_path).map_err(|e| e.to_string())?;
 
         let mut downloaded: u64 = 0;
         let mut buffer = [0u8; 8192];
@@ -307,8 +308,8 @@ pub async fn download_whisper_model(
                 return Err("cancelled".to_string());
             }
 
-            let bytes_read = std::io::Read::read(&mut response, &mut buffer)
-                .map_err(|e| e.to_string())?;
+            let bytes_read =
+                std::io::Read::read(&mut response, &mut buffer).map_err(|e| e.to_string())?;
             if bytes_read == 0 {
                 break;
             }
@@ -329,7 +330,7 @@ pub async fn download_whisper_model(
         drop(file);
         std::fs::rename(&tmp_path, &path).map_err(|e| {
             format!(
-                "Downloaded OK but failed to rename {:?} → {:?}: {}",
+                "Downloaded OK but failed to rename {:?} -> {:?}: {}",
                 tmp_path, path, e
             )
         })?;

@@ -188,3 +188,175 @@
     transform: translateX(16px);
     background: #fff;
 }
+/* Settings Refresh 1.5 */
+.settings-view {
+    max-width: 940px;
+    gap: 1.5rem;
+    padding: 0.5rem 0 2.5rem;
+}
+
+.settings-header {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.settings-title {
+    font-size: 1.45rem;
+    letter-spacing: 0;
+}
+
+.settings-section {
+    gap: 0.6rem;
+}
+
+.settings-section-title {
+    padding-left: 0;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+.settings-card {
+    padding: 0.25rem 1.1rem;
+    border-radius: 8px;
+    border-color: var(--border-subtle);
+    background: var(--bg-surface);
+}
+
+.settings-card:hover {
+    border-color: rgba(22, 201, 168, 0.25);
+}
+
+.settings-card .setting-row {
+    min-height: 66px;
+    padding: 0.8rem 0;
+}
+
+.settings-card .setting-row + .setting-row {
+    border-top: 1px solid var(--border-subtle);
+}
+
+.setting-row {
+    gap: 1.5rem;
+}
+
+.setting-info {
+    flex: 1 1 auto;
+}
+
+.setting-label {
+    font-size: 0.88rem;
+}
+
+.setting-desc {
+    max-width: 48rem;
+    line-height: 1.45;
+}
+
+.settings-select {
+    width: min(320px, 42vw);
+    min-width: 190px;
+    max-width: none;
+    min-height: 36px;
+    padding: 0.45rem 0.65rem;
+    border-color: var(--border-subtle);
+    background: #0e1415;
+}
+
+.settings-select:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(22, 201, 168, 0.12);
+}
+
+.corrections-card {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.correction-controls {
+    display: grid;
+    grid-template-columns: minmax(130px, 1fr) minmax(130px, 1fr) auto;
+    width: min(570px, 62%);
+    min-width: 0;
+    gap: 0.55rem;
+}
+
+.correction-controls .settings-select {
+    width: 100%;
+    min-width: 0;
+}
+
+.correction-controls .secondary-btn {
+    min-height: 36px;
+    padding: 0.4rem 0.8rem;
+}
+
+.profile-card {
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+.profile-card .setting-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.profile-card .setting-row:nth-child(2) {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
+}
+
+.profile-card .setting-row:nth-child(2) .settings-select {
+    width: 100%;
+}
+
+.profile-card .setting-row:first-child .setting-label {
+    text-transform: capitalize;
+}
+
+.profile-card .toggle-switch {
+    justify-self: end;
+}
+
+.setting-version-badge {
+    color: var(--text-secondary);
+    border-color: var(--border-subtle);
+}
+
+@media (max-width: 760px) {
+    .settings-card .setting-row,
+    .profile-card .setting-row,
+    .profile-card .setting-row:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+    }
+
+    .settings-select,
+    .profile-card .setting-row:nth-child(2) .settings-select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .setting-control-group,
+    .correction-controls {
+        width: 100%;
+    }
+
+    .profile-card .toggle-switch {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 520px) {
+    .settings-card {
+        padding-inline: 0.9rem;
+    }
+
+    .correction-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .correction-controls .secondary-btn {
+        width: 100%;
+    }
+}

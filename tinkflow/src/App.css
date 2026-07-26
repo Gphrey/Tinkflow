@@ -203,132 +203,6 @@ button:focus-visible {
   margin-bottom: 1rem;
 }
 
-/* --- Onboarding Wizard --- */
-.onboarding-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  z-index: 50;
-  background: var(--bg-base);
-}
-
-.onboarding-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 2.5rem;
-  width: 100%;
-  max-width: 440px;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-/* Transitions */
-.fade-in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.fade-out {
-  opacity: 0;
-  transform: translateY(10px) scale(0.98);
-}
-
-/* Step Indicators */
-.step-indicator-container {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 2rem;
-  justify-content: center;
-}
-
-.step-dot {
-  height: 3px;
-  width: 20px;
-  border-radius: 2px;
-  background-color: var(--border-subtle);
-  transition: all 0.25s ease;
-}
-
-.step-dot.completed {
-  background-color: var(--text-muted);
-}
-
-.step-dot.active {
-  background-color: var(--accent-cyan);
-  width: 28px;
-}
-
-/* Step Content */
-.step-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  animation: slideUp 0.4s var(--ease-out) forwards;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.step-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  margin-bottom: 1.25rem;
-  color: var(--text-primary);
-}
-
-.success-glow {
-  color: var(--accent-cyan);
-  border-color: rgba(0, 212, 170, 0.2);
-  background: rgba(0, 212, 170, 0.04);
-}
-
-/* Keyboard formatting */
-.hotkey-display {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 1.25rem 0;
-  color: var(--text-secondary);
-}
-
-kbd {
-  font-family: var(--font-mono);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-bottom-width: 1px;
-  border-radius: 4px;
-  padding: 0.2rem 0.45rem;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-.model-manager-wrapper {
-  width: 100%;
-  background: var(--bg-base);
-  border-radius: 10px;
-  padding: 1.25rem;
-  border: 1px solid var(--border-subtle);
-}
-
 /* --- Floating Status Indicator --- */
 .status-indicator-container {
   position: fixed;
@@ -668,6 +542,7 @@ body.overlay-mode,
 .overlay-container {
   width: 100vw;
   height: 100vh;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -687,4 +562,159 @@ body.overlay-mode .status-indicator-container.hidden {
 
 body.overlay-mode .status-indicator-container.visible {
   transform: translateY(0);
+}
+/* UI Refresh 1.5 */
+:root {
+  --bg-base: #0c1011;
+  --bg-sidebar: #091011;
+  --bg-surface: #131a1b;
+  --bg-surface-hover: #182123;
+  --bg-elevated: #202a2c;
+  --text-primary: #f2f5f3;
+  --text-secondary: #aab8b7;
+  --text-muted: #728180;
+  --accent-cyan: #16c9a8;
+  --accent-yellow: #e6b85c;
+  --accent-red: #e06f6f;
+  --border-subtle: rgba(190, 225, 219, 0.10);
+  --border-focus: rgba(22, 201, 168, 0.72);
+}
+
+body {
+  background-image: none;
+  background-color: var(--bg-base);
+}
+
+.content-area {
+  padding: clamp(1.25rem, 3vw, 2.75rem);
+  min-width: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+button, input, select {
+  box-sizing: border-box;
+}
+
+input, select {
+  color-scheme: dark;
+}
+
+@media (max-width: 640px) {
+  .content-area {
+    padding: 1rem;
+  }
+}
+/* Dictation result recovery panel */
+.dictation-result-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: min(620px, calc(100vw - 32px));
+  box-sizing: border-box;
+  padding: 0.8rem 0.9rem 0.9rem;
+  transform: translateX(-50%);
+  background: rgba(19, 26, 27, 0.98);
+  border: 1px solid rgba(190, 225, 219, 0.18);
+  border-radius: var(--radius-md);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+  color: var(--text-primary);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.dictation-result-panel--expanded {
+  pointer-events: auto !important;
+}
+
+.overlay-container > .dictation-result-panel ~ .status-indicator-container {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.overlay-mode .overlay-container > .dictation-result-panel ~ .status-indicator-container.visible {
+  transform: translateY(20px);
+}
+
+.dictation-result-panel--hint {
+  width: auto;
+  padding: 0.45rem 0.75rem;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(2px);
+}
+
+.dictation-result-panel--fading {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.dictation-result-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dictation-result-panel__status {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.dictation-result-panel__status.is-inserted {
+  color: var(--accent-cyan);
+}
+
+.dictation-result-panel__status.is-saved {
+  color: var(--accent-yellow);
+}
+
+.dictation-result-panel__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 28px;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 0.74rem;
+}
+
+.dictation-result-panel__copy:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-focus);
+}
+
+.dictation-result-panel__copy svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dictation-result-panel__text,
+.dictation-result-panel__hint {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.dictation-result-panel__text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.dictation-result-panel__hint {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.74rem;
 }

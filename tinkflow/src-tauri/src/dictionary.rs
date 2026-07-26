@@ -118,6 +118,12 @@ impl Default for DeveloperDictionary {
 }
 
 impl DeveloperDictionary {
+    /// Terms supplied to Whisper as an initial prompt. This biases recognition
+    /// toward the vocabulary Tinkflow is designed to handle without changing
+    /// the user's dictated text after recognition.
+    pub const RECOGNITION_PROMPT: &'static str =
+        "TypeScript, JavaScript, React, Rust, Tauri, JSON, API, SQL, Node.js, GitHub, CLI, URL, HTTPS, CSS, HTML, npm, cargo, async, bool, Vec, String";
+
     /// Build a new dictionary by compiling all pattern tables into a single
     /// Aho-Corasick automaton.
     ///
